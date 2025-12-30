@@ -238,7 +238,7 @@ class ScreenshotRotator {
                 'images/memory-challenges/memory-4.png',
                 'images/memory-challenges/memory-5.png'
             ];
-        } else if (this.screenshotSet === 'verify') {
+        } else if (this.screenshotSet === 'verify-send') {
             this.screenshots = [
                 'images/verification-scenarios/verify-zoom.png',
                 'images/verification-scenarios/verify-zelle.png',
@@ -246,9 +246,23 @@ class ScreenshotRotator {
                 'images/verification-scenarios/verify-wire.png',
                 'images/verification-scenarios/verify-executive.png'
             ];
+        } else if (this.screenshotSet === 'verify-receive') {
+            this.screenshots = [
+                'images/verification-receiving/receive-ceo.png',
+                'images/verification-receiving/receive-parent.png',
+                'images/verification-receiving/receive-zelle.png',
+                'images/verification-receiving/receive-wire.png',
+                'images/verification-receiving/receive-zoom.png'
+            ];
+        } else if (this.screenshotSet === 'verify-receive') {
+            this.screenshots = [
+                'images/verification-receiving/receive-ceo.png',
+                'images/verification-receiving/receive-parent.png',
+                'images/verification-receiving/receive-zelle.png',
+                'images/verification-receiving/receive-wire.png',
+                'images/verification-receiving/receive-zoom.png'
+            ];
         }
-
-        
         
         this.init();
     }
