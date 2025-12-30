@@ -184,6 +184,57 @@ h2.hero-subtitle {
     gap: 1.5rem;
     margin-top: 2rem;
 }
+
+/* Custom On-Brand Download Button */
+.custom-download-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(67, 112, 255, 0.4);
+    border: 2px solid transparent;
+}
+
+.custom-download-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(67, 112, 255, 0.5);
+    border-color: var(--secondary);
+}
+
+.custom-download-button .apple-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.custom-download-button .button-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+
+.custom-download-button .button-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.custom-download-button .button-store {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Legacy badge support (in case you want to keep SVG option) */
 .badge-link {
     transition: transform 0.3s ease;
 }
@@ -355,6 +406,11 @@ body[data-section-theme="accent"] .feature-icon {
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     min-height: 400px;
     object-fit: cover;
+    transition: opacity 0.5s ease;
+}
+.screenshot-img.rotating-screenshot {
+    /* Rotating screenshots get smooth transitions */
+    transition: opacity 0.6s ease-in-out;
 }
 .screenshot-item h4 {
     font-family: var(--font-heading);
@@ -366,6 +422,37 @@ body[data-section-theme="accent"] .feature-icon {
     font-size: 0.95rem;
     opacity: 0.75;
     line-height: 1.5;
+}
+
+/* Screenshot Rotation Indicators */
+.screenshot-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(67, 112, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.indicator:hover {
+    background: rgba(67, 112, 255, 0.6);
+    transform: scale(1.2);
+}
+.indicator.active {
+    background: var(--primary);
+    width: 24px;
+    border-radius: 4px;
+}
+body[data-section-theme="dark"] .indicator {
+    background: rgba(148, 239, 255, 0.3);
+}
+body[data-section-theme="dark"] .indicator.active {
+    background: var(--secondary);
 }
 
 /* --- Use Cases Grid --- */

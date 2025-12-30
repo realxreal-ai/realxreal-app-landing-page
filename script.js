@@ -217,3 +217,119 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
 console.log('%c👋 Welcome to realxreal', 'font-size: 20px; font-weight: bold; color: #4370FF;');
 console.log('%cInterested in how we built this? Check out our GitHub:', 'font-size: 14px; color: #B0C3FF;');
 console.log('%chttps://github.com/realxreal-ai', 'font-size: 14px; color: #94eFFF; text-decoration: underline;');
+
+// Screenshot Rotation System
+class ScreenshotRotator {
+    constructor(imageElement, indicators) {
+        this.image = imageElement;
+        this.indicators = Array.from(indicators);
+        this.currentIndex = 0;
+        this.isPaused = false;
+        
+        // Determine screenshot set
+        this.screenshotSet = this.image.dataset.screenshotSet;
+        
+        // Define screenshot paths based on set
+        if (this.screenshotSet === 'memory') {
+            this.screenshots = [
+                'images/memory-challenges/memory-1.jpeg',
+                'images/memory-challenges/memory-2.jpeg',
+                'images/memory-challenges/memory-3.jpeg',
+                'images/memory-challenges/memory-4.jpeg',
+                'images/memory-challenges/memory-5.jpeg'
+            ];
+        } else if (this.screenshotSet === 'verify') {
+            this.screenshots = [
+                'images/verification-scenarios/verify-zoom.png',
+                'images/verification-scenarios/verify-zelle.png',
+                'images/verification-scenarios/verify-emergency.png',
+                'images/verification-scenarios/verify-wire.png',
+                'images/verification-scenarios/verify-executive.png'
+            ];
+        }
+        
+        this.init();
+    }
+    
+    init() {
+        // Start rotation
+        this.startRotation();
+        
+        // Add click handlers to indicators
+        this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                this.goToSlide(index);
+            });
+        });
+        
+        // Pause on hover
+        this.image.addEventListener('mouseenter', () => this.pause());
+        this.image.addEventListener('mouseleave', () => this.resume());
+    }
+    
+    startRotation() {
+        this.interval = setInterval(() => {
+            if (!this.isPaused) {
+                this.next();
+            }
+        }, 3000); // Rotate every 3 seconds
+    }
+    
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.screenshots.length;
+        this.updateImage();
+    }
+    
+    goToSlide(index) {
+        this.currentIndex = index;
+        this.updateImage();
+        
+        // Reset rotation timer
+        clearInterval(this.interval);
+        this.startRotation();
+    }
+    
+    updateImage() {
+        // Fade out
+        this.image.style.opacity = '0';
+        
+        // Update indicators
+        this.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === this.currentIndex);
+        });
+        
+        // Change image after fade
+        setTimeout(() => {
+            this.image.src = this.screenshots[this.currentIndex];
+            
+            // Fade in
+            this.image.style.opacity = '1';
+        }, 300);
+    }
+    
+    pause() {
+        this.isPaused = true;
+    }
+    
+    resume() {
+        this.isPaused = false;
+    }
+    
+    destroy() {
+        clearInterval(this.interval);
+    }
+}
+
+// Initialize screenshot rotators
+document.addEventListener('DOMContentLoaded', () => {
+    const rotatingScreenshots = document.querySelectorAll('.rotating-screenshot');
+    
+    rotatingScreenshots.forEach(screenshot => {
+        const container = screenshot.closest('.screenshot-item');
+        const indicators = container.querySelectorAll('.indicator');
+        
+        if (indicators.length > 0) {
+            new ScreenshotRotator(screenshot, indicators);
+        }
+    });
+});
