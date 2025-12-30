@@ -247,6 +247,8 @@ class ScreenshotRotator {
                 'images/verification-scenarios/verify-executive.png'
             ];
         }
+
+        
         
         this.init();
     }
