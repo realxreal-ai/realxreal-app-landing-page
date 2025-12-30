@@ -213,11 +213,6 @@ document.querySelectorAll('a[href^="http"]').forEach(link => {
     }
 });
 
-// Console easter egg
-console.log('%c👋 Welcome to realxreal', 'font-size: 20px; font-weight: bold; color: #4370FF;');
-console.log('%cInterested in how we built this? Check out our GitHub:', 'font-size: 14px; color: #B0C3FF;');
-console.log('%chttps://github.com/realxreal-ai', 'font-size: 14px; color: #94eFFF; text-decoration: underline;');
-
 // Screenshot Rotation System
 class ScreenshotRotator {
     constructor(imageElement, indicators) {
