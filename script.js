@@ -169,6 +169,9 @@ const imageObserver = new IntersectionObserver((entries) => {
                 img.addEventListener('load', () => {
                     img.style.opacity = '1';
                 });
+            } else {
+                // FIX: If it's a standard image with a src, just show it
+                img.style.opacity = '1';
             }
             
             imageObserver.unobserve(img);

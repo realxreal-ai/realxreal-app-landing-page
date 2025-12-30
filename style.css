@@ -404,17 +404,18 @@ body[data-section-theme="accent"] .feature-icon {
 .screenshot-img {
     width: 100%;
     height: auto;
-    max-width: 400px; /* Increased from implicit size */
+    max-width: 400px;
     margin: 0 auto;
     display: block;
     border-radius: 12px;
-    background: linear-gradient(135deg, #1a1a2e, #16213e);
     object-fit: contain;
-    transition: opacity 0.6s ease-in-out;
 }
 .screenshot-img.rotating-screenshot {
-    /* Rotating screenshots get smooth transitions */
+    /* Rotating screenshots get smooth transitions and placeholder */
     transition: opacity 0.6s ease-in-out;
+    min-height: 500px;
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    object-fit: cover;
 }
 .screenshot-item h4 {
     font-family: var(--font-heading);
