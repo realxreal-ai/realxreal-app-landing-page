@@ -378,9 +378,12 @@ body[data-section-theme="accent"] .feature-icon {
 /* --- Screenshots Section --- */
 .screenshots-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 3rem;
     margin-top: 4rem;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .screenshot-item {
     text-align: center;
@@ -401,12 +404,13 @@ body[data-section-theme="accent"] .feature-icon {
 .screenshot-img {
     width: 100%;
     height: auto;
+    max-width: 400px; /* Increased from implicit size */
+    margin: 0 auto;
+    display: block;
     border-radius: 12px;
-    /* Placeholder styling - replace with actual screenshots */
     background: linear-gradient(135deg, #1a1a2e, #16213e);
-    min-height: 400px;
     object-fit: cover;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease-in-out;
 }
 .screenshot-img.rotating-screenshot {
     /* Rotating screenshots get smooth transitions */
@@ -747,6 +751,9 @@ body[data-section-theme="light"] .footer-bottom {
     .screenshots-grid {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+    .screenshot-img {
+        max-width: 320px; /* Larger on mobile for better visibility */
     }
     .use-cases-grid {
         grid-template-columns: 1fr;

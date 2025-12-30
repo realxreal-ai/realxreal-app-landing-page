@@ -232,11 +232,11 @@ class ScreenshotRotator {
         // Define screenshot paths based on set
         if (this.screenshotSet === 'memory') {
             this.screenshots = [
-                'images/memory-challenges/memory-1.jpeg',
-                'images/memory-challenges/memory-2.jpeg',
-                'images/memory-challenges/memory-3.jpeg',
-                'images/memory-challenges/memory-4.jpeg',
-                'images/memory-challenges/memory-5.jpeg'
+                'images/memory-challenges/memory-1.png',
+                'images/memory-challenges/memory-2.png',
+                'images/memory-challenges/memory-3.png',
+                'images/memory-challenges/memory-4.png',
+                'images/memory-challenges/memory-5.png'
             ];
         } else if (this.screenshotSet === 'verify') {
             this.screenshots = [
