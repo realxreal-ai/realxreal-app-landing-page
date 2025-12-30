@@ -233,7 +233,7 @@ class ScreenshotRotator {
                 'images/memory-challenges/memory-4.png',
                 'images/memory-challenges/memory-5.png'
             ];
-        } else if (this.screenshotSet === 'verify-send') {
+        } else if (this.screenshotSet === 'verify') {  // Changed from verify-send
             this.screenshots = [
                 'images/verification-scenarios/verify-zoom.png',
                 'images/verification-scenarios/verify-zelle.png',
@@ -243,19 +243,13 @@ class ScreenshotRotator {
             ];
         } else if (this.screenshotSet === 'verify-receive') {
             this.screenshots = [
-                'images/verification-receiving/receive-ceo.png',
-                'images/verification-receiving/receive-parent.png',
+                'images/verification-receiving/receive-zoom.png',
                 'images/verification-receiving/receive-zelle.png',
+                'images/verification-receiving/receive-emergency.png',
                 'images/verification-receiving/receive-wire.png',
-                'images/verification-receiving/receive-zoom.png'
-            ];
-        } else if (this.screenshotSet === 'verify-receive') {
-            this.screenshots = [
-                'images/verification-receiving/receive-ceo.png',
-                'images/verification-receiving/receive-parent.png',
-                'images/verification-receiving/receive-zelle.png',
-                'images/verification-receiving/receive-wire.png',
-                'images/verification-receiving/receive-zoom.png'
+                'images/verification-receiving/receive-ceo.png'
+                
+                
             ];
         }
         
