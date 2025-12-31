@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -24,10 +24,9 @@
             </a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#screenshots">Screenshots</a></li>
                 <li><a href="index.html#how-it-works">How It Works</a></li>
                 <li><a href="index.html#download">Download</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="privacy.html" class="active">Privacy</a></li>
             </ul>
             <button class="mobile-menu-toggle" id="mobileToggle">☰</button>
         </div>
@@ -71,95 +70,131 @@
                             <li><a href="#collect">1. Information We Collect</a></li>
                             <li><a href="#use">2. How We Use Info</a></li>
                             <li><a href="#security">3. Storage & Security</a></li>
+                            <li><a href="#sharing">4. Sharing & Third Parties</a></li>
                             <li><a href="#terms">Terms of Service</a></li>
                         </ul>
                     </details>
 
-                    <div class="legal-content-wrapper">
-                        
+                 <div class="legal-content-wrapper">
+    
                         <div id="intro" class="legal-block">
+                            <div style="background: rgba(67, 112, 255, 0.1); border-left: 4px solid #4370FF; padding: 1.5rem; margin-bottom: 2rem; border-radius: 4px;">
+                                <h3 style="margin-top: 0; font-size: 1.1rem; color: #4370FF;">⚠️ Beta & Roadmap Notice</h3>
+                                <p style="margin-bottom: 0; font-size: 0.95rem;">
+                                    realxreal is currently in <strong>Public Beta (MVP)</strong>. While our goal is 100% on-device processing (scheduled for Q1 2026), our current architecture requires secure, transient server-side processing for memory embeddings. We are building in public and prioritize transparency over perfection.
+                                </p>
+                            </div>
+
                             <h2>Our Commitment to Privacy</h2>
-                            <p>At realxreal, privacy isn't a feature—it's our foundation. We built this app on the principle that your identity, your relationships, and your memories belong to you alone.</p>
+                            <p>At realxreal, we distinguish between <strong>Data We Store</strong> (to manage your account) and <strong>Data We Process</strong> (to verify your identity). We operate on a "Zero-Retention" principle for all sensitive memory challenges.</p>
                         </div>
 
                         <div id="collect" class="legal-block">
                             <h2>1. Information We Collect</h2>
-                            <h3>1.1 Information Stored Locally on Your Device</h3>
-                            <p>The following information never leaves your device:</p>
+                            
+                            <h3>1.1 Account Information (Stored)</h3>
+                            <p>To manage your subscription and enable contact discovery, we store the following standard account data in Google Firebase:</p>
                             <ul>
-                                <li><strong>Contact Information:</strong> Names and identifiers for your trusted contacts</li>
-                                <li><strong>Memory Challenges:</strong> Questions and answers you create for verification</li>
-                                <li><strong>Cryptographic Keys:</strong> Private keys stored in your device's Secure Enclave</li>
-                                <li><strong>Authentication History:</strong> Local logs of verification attempts</li>
-                                <li><strong>Biometric Data:</strong> Face ID/Touch ID data (never transmitted)</li>
+                                <li><strong>Identity:</strong> First Name, Last Name, Email Address, Phone Number.</li>
+                                <li><strong>Technical IDs:</strong> Firebase User ID (UID), Device ID (UUID), Push Notification Tokens.</li>
+                                <li><strong>Security:</strong> Your Public Key (used by other users to encrypt messages to you).</li>
+                                <li><strong>Status:</strong> Subscription tier and renewal date.</li>
                             </ul>
 
-                            <h3>1.2 Information We Process</h3>
-                            <p>To enable the app's core functionality, we process minimal anonymous data:</p>
-                            <ul>
-                                <li><strong>Firebase User ID:</strong> A random identifier (not linked to your real identity)</li>
-                                <li><strong>Push Notification Tokens:</strong> Required to deliver verification requests</li>
-                            </ul>
+                            <h3>1.2 Memory Challenges (Transient Processing)</h3>
+                            <p>The core feature of realxreal involves comparing memory challenges (e.g., "Where did we eat lunch?") using AI. Currently, this process works as follows:</p>
+                            <ol>
+                                <li>Your challenge text is encrypted in transit (TLS 1.3) and sent to our secure inference server.</li>
+                                <li>Our server converts the text into a mathematical vector (embedding).</li>
+                                <li><strong>The text and the vector are immediately discarded from server memory.</strong></li>
+                                <li>We return only the mathematical result to your device.</li>
+                            </ol>
+                            <p><strong>We do not write your memory challenges to disk, database, or permanent logs.</strong></p>
 
-                            <h3>1.3 Information We Explicitly Do NOT Collect</h3>
+                            <h3>1.3 Information Stored ONLY on Your Device</h3>
                             <ul>
-                                <li>Phone numbers</li>
-                                <li>Email addresses</li>
-                                <li>Location data</li>
-                                <li>Contacts from your address book</li>
-                                <li>Conversation content</li>
+                                <li><strong>Your Private Key:</strong> Stored in the iOS Secure Enclave. We physically cannot access this, meaning we cannot impersonate you.</li>
+                                <li><strong>Contact List:</strong> We do not upload your address book. Connections are made manually or via QR code.</li>
                             </ul>
                         </div>
 
                         <div id="use" class="legal-block">
                             <h2>2. How We Use Your Information</h2>
+                            
                             <h3>2.1 Core Functionality</h3>
                             <ul>
-                                <li>Enable cryptographic authentication between trusted contacts</li>
-                                <li>Deliver push notifications when verification is requested</li>
+                                <li><strong>Identity Verification:</strong> We use your phone number and email to ensure you are a real person and to prevent spam/bot accounts.</li>
+                                <li><strong>Notifications:</strong> We use FCM Tokens to wake your device when a friend sends a challenge.</li>
                             </ul>
+
+                            <h3>2.2 Analytics (Privacy-Preserving)</h3>
+                            <p>We use <strong>TelemetryDeck</strong> to collect anonymous usage data (e.g., "Daily Active Users" or "Crash Rates"). TelemetryDeck does not collect personally identifiable information (PII) and creates anonymous hashes that cannot be traced back to you.</p>
+
                             <h3>2.3 What We Never Do</h3>
                             <ul>
-                                <li>Sell or share your data with third parties</li>
-                                <li>Use your data for advertising</li>
-                                <li>Train AI models on your data</li>
+                                <li>We do not sell your data.</li>
+                                <li>We do not use your memory challenges to train public AI models.</li>
+                                <li>We do not track your location.</li>
                             </ul>
                         </div>
 
                         <div id="security" class="legal-block">
                             <h2>3. Data Storage and Security</h2>
-                            <p>All sensitive data is stored locally using iOS Keychain, Secure Enclave, and Encrypted SQLite. Our minimal cloud services (Firebase) utilize TLS 1.3 encryption and Zero-Knowledge Architecture.</p>
+                            
+                            <h3>3.1 Cloud Infrastructure</h3>
+                            <p>Account data is stored in <strong>Google Firebase (US Region)</strong>. All data is encrypted at rest and in transit.</p>
+
+                            <h3>3.2 The "Zero-Retention" Guarantee</h3>
+                            <p>While we must process your memories to generate embeddings, our backend is designed to be stateless regarding this content. Once the HTTP request finishes, the memory data ceases to exist on our infrastructure.</p>
                         </div>
 
                         <div id="sharing" class="legal-block">
                             <h2>4. Data Sharing and Third Parties</h2>
-                            <p>We use Firebase (Google) and Apple Push Notification Service for delivery. These providers collect minimal data required for transmission.</p>
+                            <p>We use the following processors to run the service:</p>
+                            <ul>
+                                <li><strong>Google Firebase:</strong> Authentication, Database, and Cloud Functions.</li>
+                                <li><strong>TelemetryDeck:</strong> Anonymous analytics.</li>
+                                <li><strong>Apple:</strong> Subscription management (StoreKit) and Push Notifications (APNS).</li>
+                            </ul>
+                            <p>We may disclose Account Information (Name/Email/IP) if compelled by a valid court order. However, <strong>we cannot disclose memory content</strong> because we do not store it.</p>
                         </div>
 
                         <div id="rights" class="legal-block">
                             <h2>5. Your Rights and Controls</h2>
-                            <p>You have complete access to all data stored on your device. You can delete contacts, challenges, or your entire account via Settings at any time.</p>
+                            <p>You have full control over your data:</p>
+                            <ul>
+                                <li><strong>Delete Account:</strong> You can delete your account directly inside the app settings. This immediately wipes your data from Firebase.</li>
+                                <li><strong>Export Data:</strong> Since most data (memories/contacts) lives on your device, you already possess it.</li>
+                            </ul>
                         </div>
 
                         <div id="children" class="legal-block">
                             <h2>6. Children's Privacy</h2>
-                            <p>realxreal is not intended for users under 13 years of age.</p>
+                            <p>realxreal is not intended for users under 13 years of age. We do not knowingly collect information from children under 13.</p>
+                        </div>
+                        
+                        <div class="legal-block">
+                            <h2>7. Changes & Evolution</h2>
+                            <p><strong>We are building towards a strictly on-device future.</strong> We anticipate updating this policy in Q1 2026 to reflect the removal of our server-side embedding service. We will notify you via the app when this architecture change occurs.</p>
                         </div>
 
                         <div id="contact" class="legal-block">
                             <h2>9. Contact Us</h2>
                             <p><strong>Email:</strong> <a href="mailto:privacy@realxreal.ai">privacy@realxreal.ai</a></p>
-                            <p><strong>Address:</strong> Real Recognizes Real AI<br>Denver, CO 80202</p>
                         </div>
 
                         <div id="ccpa" class="legal-block">
                             <h2>10. California Privacy Rights (CCPA)</h2>
-                            <p>California residents have the right to know, delete, and opt-out. Since we collect almost no data, these requests are easily handled via the app or email.</p>
+                            <p>California residents have the right to know, delete, and opt-out. You may exercise these rights by emailing us or using the in-app deletion tools.</p>
                         </div>
 
                         <div id="gdpr" class="legal-block">
                             <h2>11. European Privacy Rights (GDPR)</h2>
-                            <p>European users have rights to access, rectification, erasure, and restriction. Contact us at privacy@realxreal.ai.</p>
+                            <p>We process your data based on <strong>Contractual Necessity</strong> (to provide the app features) and <strong>Legitimate Interest</strong> (fraud prevention). You have the right to erasure and portability. Contact us at privacy@realxreal.ai.</p>
+                        </div>
+                        
+                        <div style="font-size: 0.8rem; opacity: 0.6; margin-bottom: 3rem;">
+                            <p>Note: Parts of this Privacy Policy are adapted from the <a href="https://automattic.com/privacy/" target="_blank">Automattic Privacy Policy</a> (CC-BY-SA 4.0).</p>
                         </div>
 
                         <hr class="section-divider">
@@ -168,19 +203,30 @@
                             <h1>Terms of Service</h1>
                             <p class="last-updated">Last Updated: December 30, 2025</p>
                             
-                            <h2>1. Acceptance of Terms</h2>
-                            <p>By downloading, installing, or using realxreal, you agree to these Terms of Service.</p>
+                            <h2>1. Beta Services Disclaimer</h2>
+                            <p><strong>Please read carefully:</strong> realxreal is currently in a <strong>Beta/MVP state</strong>. By using the App, you acknowledge that:</p>
+                            <ul>
+                                <li>The App may contain bugs, errors, or security vulnerabilities.</li>
+                                <li>Verification is probabilistic (based on AI) and <strong>not guaranteed</strong> to be 100% accurate.</li>
+                                <li>We are not responsible for financial losses or damages resulting from failed verifications or identity theft.</li>
+                            </ul>
 
-                            <h2>2. Description of Service</h2>
-                            <p>realxreal is a multi-factor authentication app that verifies identity through memory-based challenges.</p>
+                            <h2>2. Acceptance of Terms</h2>
+                            <p>By downloading or using realxreal, you agree to these Terms. If you do not agree, strictly do not use the App.</p>
 
-                            <h2>3. User Responsibilities</h2>
-                            <p>You are responsible for creating meaningful memory challenges and verifying contacts in person before adding them.</p>
+                            <h2>3. Description of Service</h2>
+                            <p>realxreal verifies identity through memory-based challenges. It is intended as a <strong>supplementary</strong> security layer, not a replacement for common sense or standard authentication methods.</p>
 
-                            <h2>4. Limitations and Disclaimers</h2>
-                            <p>The App is provided "AS IS". We cannot guarantee complete protection against all forms of attack or impersonation.</p>
+                            <h2>4. User Responsibilities</h2>
+                            <p>You agree to provide accurate registration information (Name/Phone). You are responsible for keeping your device secure. You must not use the App to harass others or generate fake challenges.</p>
 
-                            <h2>5. Governing Law</h2>
+                            <h2>5. "As Is" and "As Available" Disclaimer</h2>
+                            <p>THE APP IS PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.</p>
+
+                            <h2>6. Limitation of Liability</h2>
+                            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, REAL RECOGNIZES REAL AI SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS OR REVENUES.</p>
+
+                            <h2>7. Governing Law</h2>
                             <p>These Terms are governed by the laws of the State of Colorado, USA.</p>
                             
                             <p><strong>Contact:</strong> <a href="mailto:legal@realxreal.ai">legal@realxreal.ai</a></p>
@@ -196,34 +242,66 @@
         <div class="footer-container">
             <div class="footer-brand">
                 <a href="index.html" class="nav-logo">
+                    <div class="nav-logo-img">
+                        <img src="images/realxreal-dark-logo.png" alt="realxreal logo">
+                    </div>
                     <span class="nav-logo-text">realxreal</span>
                 </a>
                 <p>Multi-factor authentication for people.</p>
+                <p class="footer-tagline">Real Recognizes Real.</p>
             </div>
+
             <div class="footer-links">
-                <a href="privacy.html">Privacy & Terms</a>
+                <h4>Product</h4>
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#download">Download</a>
+                <a href="https://realxreal.ai" target="_blank">About the Company</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Legal</h4>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="privacy.html#terms">Terms of Service</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Connect</h4>
+                <div class="social-links">
+                    <a href="/cdn-cgi/l/email-protection#e48d8a828ba4968185889c96818588ca858d" class="social-link" aria-label="Email">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12.713l-11.985-9.713h23.971l-11.986 9.713zm-5.425-1.822l-6.575-5.329v12.501l6.575-7.172zm10.85 0l6.575 7.172v-12.501l-6.575 5.329zm-1.557 1.261l-3.868 3.135-3.868-3.135-8.11 8.848h23.956l-8.11-8.848z"/></svg>
+                    </a>
+                    <a href="https://x.com/realxreal_ai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+                    </a>
+                    <a href="https://github.com/realxreal-ai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+                        <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
             </div>
         </div>
+
         <div class="footer-bottom">
-            <p>© <span id="year">2025</span> Real Recognizes Real AI.</p>
+            <p>© <span id="year">2025</span> Real Recognizes Real AI. All Rights Reserved.</p>
         </div>
     </footer>
+
+   
 
     <script src="script.js"></script>
     <script>
         // Specific Script for Privacy Page TOC
-        // Highlights the sidebar link based on scroll position
         document.addEventListener('DOMContentLoaded', () => {
             const sections = document.querySelectorAll('.legal-block');
             const navLinks = document.querySelectorAll('.toc-sidebar a');
 
-            window.addEventListener('scroll', () => {
+            function onScroll() {
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
                     const sectionHeight = section.clientHeight;
-                    // Trigger when 1/3 down the screen
-                    if (pageYOffset >= (sectionTop - 200)) {
+                    // Trigger when 1/3 down the screen or near it
+                    if (pageYOffset >= (sectionTop - 150)) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -234,7 +312,9 @@
                         link.classList.add('active');
                     }
                 });
-            });
+            }
+
+            window.addEventListener('scroll', onScroll);
         });
     </script>
 </body>

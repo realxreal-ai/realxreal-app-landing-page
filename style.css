@@ -16,6 +16,24 @@
     --transition-speed: 0.8s;
 }
 
+/* Add this to your style.css if you haven't already */
+
+html {
+    scroll-behavior: smooth;
+}
+
+.legal-block {
+    /* This ensures that when you click a link, the header 
+       doesn't cover the title of the section */
+    scroll-margin-top: 120px; 
+}
+
+.toc-sidebar a.active {
+    color: #4370FF; /* Or your brand primary color */
+    border-left: 2px solid #4370FF;
+    background: linear-gradient(90deg, rgba(67, 112, 255, 0.05) 0%, rgba(255,255,255,0) 100%);
+}
+
 * {
     margin: 0;
     padding: 0;
