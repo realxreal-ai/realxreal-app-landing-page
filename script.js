@@ -280,7 +280,7 @@ class ScreenshotRotator {
             if (!this.isPaused) {
                 this.next();
             }
-        }, 5000); // Rotate every 3 seconds
+        }, 5000); // Rotate every 5 seconds
     }
     
     next() {
