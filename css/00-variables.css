@@ -1,0 +1,90 @@
+/* ==========================================================================
+   Variables & Global Reset
+   ========================================================================== */
+
+:root {
+    --font-heading: 'JetBrains Mono', monospace;
+    --font-body: 'JetBrains Mono', monospace;
+    --bg-light: #f8faff;
+    --text-light: #080F36;
+    --primary: #4370FF;
+    --secondary: #94eFFF;
+    --bg-dark: #0F0435;
+    --text-dark: #B0C3FF;
+    --primary-dark: #404AFF;
+    --secondary-dark: #B0C3FF;
+    --bg-accent: #404AFF;
+    --text-accent: #FFFFFF;
+    --transition-speed: 0.8s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar */
+::-webkit-scrollbar { display: none; }
+
+body {
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    scroll-behavior: smooth;
+}
+
+.special-font {
+    font-family: 'Inter', sans-serif;
+}
+
+/* --- Theme transitions (applied via body[data-section-theme]) --- */
+body[data-section-theme="light"] {
+    background-color: var(--bg-light);
+    color: var(--text-light);
+}
+body[data-section-theme="dark"] {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
+}
+body[data-section-theme="accent"] {
+    background-color: var(--bg-accent);
+    color: var(--text-accent);
+}
+
+/* Animated background grid */
+.bg-grid {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; opacity: 0.03;
+    background-image:
+        linear-gradient(rgba(67, 112, 255, 0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(67, 112, 255, 0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+@keyframes gridMove {
+    from { transform: translate(0, 0); }
+    to { transform: translate(50px, 50px); }
+}
+
+/* --- Shared section/container layout primitives --- */
+.section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
+    position: relative;
+}
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}

@@ -1,0 +1,27 @@
+/* ==========================================================================
+   realxreal.app — Stylesheet Entry Point
+   Imports are ordered to match the cascade the original single file relied
+   on: variables/reset first, then shared typography, then components
+   roughly top-to-bottom as they appear on the page, then legal pages,
+   animations, and responsive overrides last.
+
+   To add a new component: create css/NN-name.css and add an @import line
+   below in the right position. Keep the numeric prefixes in file names so
+   directory listings stay in load order.
+   ========================================================================== */
+
+@import url('00-variables.css');
+@import url('01-typography.css');
+@import url('02-nav.css');
+@import url('03-hero.css');
+@import url('04-buttons.css');
+@import url('05-problem.css');
+@import url('06-features.css');
+@import url('07-steps.css');
+@import url('08-screenshots.css');
+@import url('09-use-cases.css');
+@import url('10-download.css');
+@import url('11-footer.css');
+@import url('12-legal.css');
+@import url('13-animations.css');
+@import url('14-responsive.css');
