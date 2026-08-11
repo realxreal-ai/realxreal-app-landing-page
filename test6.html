@@ -243,16 +243,30 @@ nav.scrolled {
 }
 
 /* ==========================================================================
-   Hero Logo
-   Logo PNG already contains the "realxreal" wordmark on a transparent
-   square canvas, so it just sits in normal flow above the headline —
-   no ring, no cropping, no separate text repeating the name.
+   Hero Backdrop Logo
+   The logo PNG already contains the "realxreal" wordmark and a circle
+   mark on a square transparent canvas — no need to re-crop it into a
+   ring or repeat the name as separate text. Instead it sits huge and
+   faint behind the whole hero as a watermark, and everything else in
+   the hero gets an explicit stacking context so it reads clearly on top.
    ========================================================================== */
-.hero-logo-mark {
-    width: clamp(220px, 24vw, 340px);
+.hero-backdrop-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: clamp(700px, 82vw, 1300px);
     height: auto;
-    margin: 0 auto 1.5rem;
-    display: block;
+    opacity: 0.05;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Everything visible in the hero sits above the backdrop (backdrop itself excluded) */
+.hero > *:not(.hero-backdrop-logo) {
+    position: relative;
+    z-index: 1;
 }
 
 h1.hero-title {
@@ -734,7 +748,7 @@ h1.hero-title span.accent { color: var(--primary); }
 </nav>
 
 <section class="hero">
-    <img class="hero-logo-mark" src="images/realxreal-dark-logo.png" alt="realxreal logo">
+    <img class="hero-backdrop-logo" src="images/realxreal-dark-logo.png" alt="" aria-hidden="true">
 
     <h1 class="hero-title">A codeword only <span class="accent">they'd</span> know.</h1>
 
