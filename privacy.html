@@ -292,35 +292,6 @@
     </footer>
 
    
-
-    <script src="script.js"></script>
-    <script>
-        // Specific Script for Privacy Page TOC
-        document.addEventListener('DOMContentLoaded', () => {
-            const sections = document.querySelectorAll('.legal-block');
-            const navLinks = document.querySelectorAll('.toc-sidebar a');
-
-            function onScroll() {
-                let current = '';
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    // Trigger when 1/3 down the screen or near it
-                    if (pageYOffset >= (sectionTop - 150)) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').includes(current)) {
-                        link.classList.add('active');
-                    }
-                });
-            }
-
-            window.addEventListener('scroll', onScroll);
-        });
-    </script>
+    <script  type="module" src="js/privacy.js"></script>
 </body>
 </html>
