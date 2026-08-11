@@ -1,0 +1,275 @@
+/* ==========================================================================
+   Phone Mockups
+   Two CSS-drawn iPhones showing Alice's and Bob's mirrored views of the same
+   codeword pair. Everything inside .phone-screen stays on the original dark
+   brand palette — that contrast against the white hero is the whole point of
+   the light-mode surface.
+
+   Driven by js/modules/codeword-rotation.js (words + ring) and
+   js/modules/device-clock.js (status bar).
+   ========================================================================== */
+.phone-pair {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 4.5rem);
+    position: relative;
+    margin-top: 1rem;
+}
+
+/* Ambient glow sitting between and behind the two devices. */
+.phone-pair::before {
+    content: '';
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(67, 112, 255, 0.22) 0%, rgba(67, 112, 255, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* --- Device frame -------------------------------------------------------- */
+.phone {
+    position: relative;
+    width: 420px;
+    height: 870px;
+    background: #050113;
+    border-radius: 68px;
+    padding: 14px;
+    box-shadow:
+        0 0 0 2px rgba(15, 4, 53, 0.06),
+        0 45px 110px rgba(15, 4, 53, 0.24),
+        0 12px 36px rgba(67, 112, 255, 0.22);
+    z-index: 1;
+    flex-shrink: 0;
+    animation: floatPhone 6s ease-in-out infinite;
+}
+
+/* Negative delay puts the right phone half a cycle ahead, so the pair never
+   bobs in unison. */
+.phone-right { animation-delay: -3s; }
+
+.phone-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    border-radius: 56px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dynamic-island {
+    position: absolute;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 108px;
+    height: 30px;
+    background: #000;
+    border-radius: 16px;
+    z-index: 5;
+}
+
+.status-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 26px 0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    opacity: 0.9;
+}
+
+/* --- Screen content ------------------------------------------------------ */
+.app-content {
+    width: 100%;
+    padding: 56px 26px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(67, 112, 255, 0.18);
+    border: 1px solid rgba(67, 112, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.contact-meta { text-align: left; }
+.contact-name {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+}
+.contact-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--success);
+    margin-top: 3px;
+}
+.contact-status .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--success);
+}
+
+/* --- Codeword pair ------------------------------------------------------- */
+.word-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+}
+.word-col {
+    flex: 1;
+    text-align: center;
+}
+.word-divider {
+    width: 1px;
+    height: 58px;
+    background: var(--border);
+}
+
+.word-label {
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(176, 195, 255, 0.55);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.word-value {
+    font-family: var(--font-mono);
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #fff;
+    display: inline-block;
+
+    /* Reserved height keeps the row from collapsing during the swap, when
+       the value is momentarily transparent. */
+    min-height: 2rem;
+    transition: opacity 0.28s var(--ease), transform 0.28s var(--ease);
+}
+.word-col.theirs .word-value { color: var(--secondary); }
+
+/* Applied by the rotation engine for the duration of the crossfade. The JS
+   timeout that swaps the text must stay in step with this transition. */
+.word-value.swapping {
+    opacity: 0;
+    transform: translateY(6px) scale(0.94);
+}
+
+/* --- Circular countdown -------------------------------------------------- */
+.timer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.timer-ring {
+    position: relative;
+    width: 124px;
+    height: 124px;
+}
+
+/* Rotated so the stroke starts at 12 o'clock rather than 3. */
+.timer-ring svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.timer-ring circle {
+    fill: none;
+    stroke-width: 5;
+}
+.timer-ring .track { stroke: rgba(176, 195, 255, 0.12); }
+.timer-ring .progress {
+    stroke: var(--primary);
+    stroke-linecap: round;
+    transition: stroke 0.3s var(--ease);
+}
+
+/* Last few seconds before a rotation. */
+.timer-ring .progress.urgent { stroke: var(--secondary); }
+
+.timer-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.45rem;
+    color: #fff;
+}
+
+.timer-caption {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(176, 195, 255, 0.55);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Responsive
+   The frame scales by fixed steps rather than fluidly, because the screen
+   contents are sized in absolute px and drift out of proportion otherwise.
+   ========================================================================== */
+@media (max-width: 1180px) {
+    .phone { width: 360px; height: 745px; }
+}
+@media (max-width: 900px) {
+    .phone { width: 300px; height: 622px; }
+}
+@media (max-width: 680px) {
+    .phone-pair {
+        flex-direction: column;
+        gap: 3rem;
+    }
+    .phone-pair::before { top: 30%; }
+    .phone { width: 320px; height: 663px; }
+
+    /* Stacked vertically the offset float reads as a glitch, so both
+       devices bob together. */
+    .phone-right { animation-delay: 0s; }
+}
+@media (max-width: 400px) {
+    .phone { width: 270px; height: 560px; }
+}

@@ -1,0 +1,122 @@
+/* ==========================================================================
+   Buttons & Store Badges
+   ========================================================================== */
+
+/* --- Nav CTA pill -------------------------------------------------------- */
+.nav-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    padding: 0.6rem 1.3rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(67, 112, 255, 0.28);
+    transition: all var(--transition-fast);
+}
+.nav-cta:hover {
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(67, 112, 255, 0.36);
+}
+
+/* --- Store badge row ----------------------------------------------------- */
+.download-badges {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 3.5rem;
+    flex-wrap: wrap;
+}
+
+.custom-download-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #fff;
+    padding: 0.9rem 1.75rem;
+    border-radius: 12px;
+    font-family: var(--font-heading);
+    text-decoration: none;
+    transition: all 0.3s var(--ease);
+    box-shadow: var(--shadow-cta);
+    border: 2px solid transparent;
+}
+.custom-download-button:hover {
+    color: #fff;
+    text-decoration: none;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-cta-hover);
+    border-color: var(--secondary);
+}
+
+.custom-download-button .button-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.2;
+}
+.custom-download-button .button-label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.custom-download-button .button-store {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+/* --- Play Store: same shape, locked "coming soon" state ------------------- */
+.custom-download-button.play-store {
+    position: relative;
+    background: linear-gradient(135deg, #f1f2f6 0%, #e4e6ee 100%);
+    color: #6b7080;
+    box-shadow: 0 4px 14px rgba(15, 4, 53, 0.08);
+    cursor: not-allowed;
+}
+.custom-download-button.play-store:hover {
+    color: #6b7080;
+    transform: none;
+    box-shadow: 0 4px 14px rgba(15, 4, 53, 0.08);
+    border-color: transparent;
+}
+.custom-download-button.play-store svg { opacity: 0.55; }
+.custom-download-button.play-store .button-label,
+.custom-download-button.play-store .button-store { opacity: 0.6; }
+
+.coming-soon-ribbon {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--heading);
+    color: #fff;
+    font-family: var(--font-body);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+}
+
+@media (max-width: 400px) {
+    .coming-soon-ribbon {
+        font-size: 0.55rem;
+        padding: 0.25rem 0.5rem;
+        top: -8px;
+        right: -8px;
+    }
+}

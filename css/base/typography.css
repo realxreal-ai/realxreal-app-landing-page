@@ -1,0 +1,55 @@
+/* ==========================================================================
+   Typography
+   Defaults for long-form prose. The landing page sets its own display type
+   per component; this layer is what the legal pages read from.
+   ========================================================================== */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--heading);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 700; }
+h2 { font-size: 1.8rem; font-weight: 700; }
+
+/* h3 drops back to the body face on purpose — inside a legal block, h2 and
+   h3 are only one step apart in size, and the family switch is what makes
+   the hierarchy legible. */
+h3 {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+h4 { font-size: 0.9rem; font-weight: 600; }
+
+/* Prose leading lives here rather than on body — see the note in reset.css. */
+p, li {
+    line-height: 1.7;
+}
+
+p { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+strong {
+    font-weight: 700;
+    color: var(--heading);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+a:hover { text-decoration: underline; }
+
+/* Focus ring — the reset removed button chrome, so this is the only
+   remaining keyboard affordance. Applied via :focus-visible so it never
+   shows on mouse clicks. */
+:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
