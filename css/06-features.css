@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Feature Grid
+   ========================================================================== */
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-top: 4rem;
+}
+.feature-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(67, 112, 255, 0.1);
+    border-radius: 16px;
+    padding: 2.5rem;
+    transition: all 0.4s ease;
+}
+body[data-section-theme="light"] .feature-card {
+    background: white;
+    border: 1px solid rgba(8, 15, 54, 0.1);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.04);
+}
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(67, 112, 255, 0.15);
+    border-color: rgba(67, 112, 255, 0.3);
+}
+.feature-icon {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+body[data-section-theme="dark"] .feature-icon,
+body[data-section-theme="accent"] .feature-icon {
+    color: var(--secondary);
+}
+.feature-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+.feature-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    opacity: 0.85;
+}
