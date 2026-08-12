@@ -11,9 +11,13 @@
    third card is four plain outline shapes (bubble, envelope, person,
    handset) that belong to no product.
    ========================================================================== */
+/* --secondary-dark is #B0C3FF, the periwinkle already in the brand palette.
+   It is light enough that the section keeps the site's default ink: --body
+   clears 5.91:1 here and --heading 10.78:1, so .section-head needs no
+   per-section override the way a saturated ground would. */
 .attacks-section {
     padding: 6rem 0;
-    background: var(--surface-sunken);
+    background: var(--secondary-dark);
 }
 
 .attacks-grid {
