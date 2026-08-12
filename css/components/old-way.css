@@ -300,7 +300,10 @@
 .oldway-bridge-list li {
     counter-increment: bridge-step;
     position: relative;
-    padding-left: 2.5rem;
+    /* In em, not rem: the numeral is drawn at the item's own font size, which
+       clamps across the range, so a fixed indent would leave the numeral
+       almost touching the text at the top end. Box (0.95em) + gap (0.4em). */
+    padding-left: 1.35em;
     font-family: var(--font-heading);
     font-size: clamp(2rem, 3.1vw, 3.2rem);
     font-weight: 600;
@@ -315,6 +318,13 @@
     position: absolute;
     left: 0;
     top: 0;
+    /* The heading face has no tabular figures — "1." is materially narrower
+       than "3." — so a numeral left-aligned at the margin leaves a different
+       gap on every line. Right-aligning inside a fixed box lands all three
+       numerals on the same right edge, which makes the gap to the text
+       identical down the list. */
+    width: 0.95em;
+    text-align: right;
     font-weight: 700;
     /* 3.3:1 — below the 4.5:1 body-text bar but above the 3:1 large-text
        one, which these numerals clear at this size and weight. */
