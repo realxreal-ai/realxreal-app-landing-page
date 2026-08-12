@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>realxreal — A codeword only they'd know</title>
 
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="realxreal" />
+<link rel="manifest" href="/site.webmanifest" />
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
@@ -542,6 +549,171 @@
         <div class="statement-screenshot">
             <img src="images/alice-home-screen.png" alt="realxreal home screen showing Alice's list of trusted contacts with live rotating codewords">
         </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     How It Works — the mechanics, once the statement above has made the
+     claim. Contained width and ordinary cards: the full-bleed quadrant
+     treatment belongs to the objection grid alone.
+     ========================================================================== -->
+<section class="steps-section">
+    <div class="container">
+
+        <header class="section-head">
+            <h2 class="section-eyebrow">How It Works</h2>
+            <p class="section-subhead">Set it up once. It runs itself after that.</p>
+        </header>
+
+        <!-- An <ol> because the order is real, not decorative. Each step's
+             supplied heading is split at its em dash into the label and the
+             title; no wording is changed. -->
+        <ol class="steps-grid">
+            <li class="step-card fade-in">
+                <p class="step-eyebrow">Step 1</p>
+                <h3 class="step-title">Choose your rotation</h3>
+                <p class="step-body">Every 30 seconds, every minute, every five — you decide how often your codeword pair refreshes. Faster rotation means a shorter window for anything to leak.</p>
+                <div class="step-shot">
+                    <img src="images/how-it-works/how-often-should-codewords-rotate.png"
+                         alt="realxreal settings screen asking how often codewords should rotate, with interval options to choose from"
+                         width="1320" height="2718" loading="lazy" decoding="async">
+                </div>
+            </li>
+
+            <li class="step-card fade-in">
+                <p class="step-eyebrow">Step 2</p>
+                <h3 class="step-title">Invite a contact</h3>
+                <p class="step-body">Scan a QR code or send a link. That one moment sets up a shared cryptographic seed — nothing to configure after.</p>
+                <div class="step-shot">
+                    <img src="images/how-it-works/invite-bob.png"
+                         alt="realxreal invite screen for adding Bob as a trusted contact, showing a QR code and a shareable link"
+                         width="1320" height="2718" loading="lazy" decoding="async">
+                </div>
+            </li>
+
+            <li class="step-card fade-in">
+                <p class="step-eyebrow">Step 3</p>
+                <h3 class="step-title">Stay synced, even offline</h3>
+                <p class="step-body">Codewords keep rotating in sync on both devices without needing a live connection every time. Open the app days later and they still match.</p>
+                <div class="step-shot">
+                    <img src="images/how-it-works/youre-synced-with-alice.png"
+                         alt="realxreal confirmation screen showing that you are synced with Alice"
+                         width="1320" height="2718" loading="lazy" decoding="async">
+                </div>
+            </li>
+        </ol>
+
+    </div>
+</section>
+
+<!-- ==========================================================================
+     Attacks We Prevent — translates "MFA for people" before naming the
+     three attacks, because the phrase does not land on first read: everyone
+     hears MFA as "prove this device is mine", not "prove the human on the
+     other end is who they say".
+
+     Every icon here is a generic outline shape. No third-party brand marks
+     are used to stand in for messaging platforms.
+     ========================================================================== -->
+<section class="attacks-section">
+    <div class="container">
+
+        <header class="section-head">
+            <h2 class="section-eyebrow">Attacks We Prevent</h2>
+            <p class="section-lede">Traditional MFA proves a device is yours. realxreal proves the person on the other end is who they claim to be — a codeword tied to their device, not their voice or their face.</p>
+        </header>
+
+        <div class="attacks-grid">
+            <article class="attack-card fade-in">
+                <span class="attack-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a5 5 0 0 0-5 5v4a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"/>
+                        <path d="M4 11a8 8 0 0 0 16 0"/>
+                        <path d="M12 19v3"/>
+                    </svg>
+                </span>
+                <h3 class="attack-title">AI Deepfakes</h3>
+                <p class="attack-body">Voice clones and video calls that sound and look exactly right.</p>
+            </article>
+
+            <article class="attack-card fade-in">
+                <span class="attack-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="6" y="2" width="12" height="20" rx="2"/>
+                        <path d="M10 6h4"/>
+                        <path d="M9 13l6 6"/>
+                        <path d="M15 13l-6 6"/>
+                    </svg>
+                </span>
+                <h3 class="attack-title">SIM Swaps</h3>
+                <p class="attack-body">Someone else's device now answers as "you."</p>
+            </article>
+
+            <article class="attack-card fade-in">
+                <span class="attack-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 13a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>
+                        <path d="M9 9h6"/>
+                    </svg>
+                </span>
+                <h3 class="attack-title">Account Compromise</h3>
+                <p class="attack-body">A real login on a compromised or spoofed account — across text, email, social, and chat apps.</p>
+                <!-- Generic channel glyphs: bubble, envelope, person, handset.
+                     Intentionally not any platform's mark. -->
+                <span class="attack-channels" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7A8.4 8.4 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.5 8.5 0 0 1 21 11.5z"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>
+                    </svg>
+                </span>
+            </article>
+        </div>
+
+    </div>
+</section>
+
+<!-- ==========================================================================
+     Use Cases — who the product is for, in four cards.
+     ========================================================================== -->
+<section class="usecases-section">
+    <div class="container">
+
+        <header class="section-head">
+            <h2 class="section-eyebrow">Who It's For</h2>
+        </header>
+
+        <div class="usecases-grid">
+            <article class="usecase-card fade-in">
+                <h3 class="usecase-title">Families</h3>
+                <p class="usecase-body">When a call sounds exactly like your kid — panicked, urgent, asking for money — the codeword tells you in seconds if it's really them.</p>
+            </article>
+
+            <article class="usecase-card fade-in">
+                <h3 class="usecase-title">Executives</h3>
+                <p class="usecase-body">Stop wire fraud before it starts. Verify who's actually asking for that transfer, with no shared secret a scammer could research or guess.</p>
+            </article>
+
+            <article class="usecase-card fade-in">
+                <h3 class="usecase-title">Journalists</h3>
+                <p class="usecase-body">Confirm a source is who they claim to be, even over an unfamiliar number or a cloned voice.</p>
+            </article>
+
+            <article class="usecase-card fade-in">
+                <h3 class="usecase-title">Everyone Else</h3>
+                <p class="usecase-body">Anyone who wants a real answer to "is this actually them?" — without playing twenty questions.</p>
+            </article>
+        </div>
+
     </div>
 </section>
 

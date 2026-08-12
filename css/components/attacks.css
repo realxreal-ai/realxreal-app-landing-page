@@ -1,0 +1,91 @@
+/* ==========================================================================
+   Attacks We Prevent
+   Three light cards on the sunken surface, so the band separates from the
+   sections either side without leaving the contained-width grid the rest of
+   the page uses.
+
+   Icons are stroke line-art on a tinted round badge — the same construction
+   the site already uses for card marks, so these read as part of one icon
+   system. Every glyph is generic by requirement: no third-party marks are
+   used to stand in for messaging platforms, and the channel strip on the
+   third card is four plain outline shapes (bubble, envelope, person,
+   handset) that belong to no product.
+   ========================================================================== */
+.attacks-section {
+    padding: 6rem 0;
+    background: var(--surface-sunken);
+}
+
+.attacks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.attack-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-raised);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 2.5rem 2.25rem;
+    box-shadow: var(--shadow-card);
+}
+
+.attack-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.25rem;
+    height: 3.25rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(67, 112, 255, 0.10);
+    border: 1px solid rgba(67, 112, 255, 0.28);
+    color: var(--primary);
+    margin-bottom: 1.75rem;
+}
+.attack-mark svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.attack-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.3rem, 1.85vw, 1.7rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+    margin-bottom: 0.85rem;
+}
+
+.attack-body {
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--body);
+    margin-bottom: 0;
+}
+
+/* Generic channel glyphs for the account-compromise card. Deliberately
+   unbranded outline shapes — see the note at the top of this file. */
+.attack-channels {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-muted);
+}
+.attack-channels svg {
+    width: 1.15rem;
+    height: 1.15rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+    .attacks-section { padding: 4.5rem 0; }
+    .attacks-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+}
