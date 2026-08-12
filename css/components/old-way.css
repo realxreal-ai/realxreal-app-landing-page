@@ -248,19 +248,24 @@
     text-wrap: balance;
 }
 
-.oldway-qa-answer {
-    font-size: clamp(1.2rem, 1.65vw, 1.6rem);
-    font-weight: 500;
-    line-height: 1.55;
-    color: var(--body);
-    margin-bottom: 0;
-}
+/* --- The doodle ----------------------------------------------------------
+   With the answer copy gone the drawing carries the panel, so it is sized as
+   the subject rather than as an icon beside a heading.
 
-/* Emphasis on the light panels. Unchanged from the card version — the
-   contrast reasoning does not depend on the panel having been a card. */
-.oldway-accent-dark {
-    color: var(--primary-dark);
-    font-weight: 700;
+   One square box is enough for all four. Each PNG is a 512 x 512 canvas with
+   its artwork centred and scaled to a common size inside it, so identical
+   CSS dimensions already produce identical *apparent* sizes — no per-image
+   correction, and no need to reconcile four different aspect ratios here.
+   See the note in the section markup for how the source files were prepared.
+
+   width alone drives it: the intrinsic width/height attributes on the <img>
+   give the box a 1:1 aspect ratio before the file loads, so the panel does
+   not reflow as the images arrive. */
+.oldway-qa-doodle {
+    display: block;
+    width: clamp(8.1rem, 61.2%, 15.3rem);
+    height: auto;
+    margin: clamp(1.25rem, 2vw, 2.25rem) auto 0;
 }
 
 /* --- Right half: the conclusion ------------------------------------------

@@ -30,25 +30,112 @@
     mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 
-/* The track holds the card set twice — see the note in index.html. */
+/* The track holds the card set twice — see the note in index.html.
+   The duration is tied to the number of cards, not to a feel: the track
+   translates a fixed -50%, so doubling the card count doubles the distance
+   and would double the speed if the duration stayed put. 110s for 14 cards
+   is the same pixels-per-second the 7-card set ran at 55s. */
 .press-track {
     display: flex;
     gap: 1.5rem;
     width: max-content;
-    animation: pressScroll 55s linear infinite;
+    animation: pressScroll 110s linear infinite;
 }
 .press-track:hover { animation-play-state: paused; }
 
+/* ==========================================================================
+   Cards
+   Each card is a link to the story it quotes, and carries its outlet's own
+   accent. The accent is set once per card as --press-rgb (space-separated
+   channels, so one custom property can drive both the solid colour and the
+   alpha tints below); everything else here reads from it.
+
+   The colour is deliberately additive: the box is exactly the size it was
+   before — same width, padding, radius and border width — so the marquee's
+   footprint is unchanged. The accent strip is absolutely positioned and the
+   tint is a background, neither of which costs a pixel of layout.
+   ========================================================================== */
 .press-card {
+    /* Fallback for a card with no data-outlet — brand blue. */
+    --press-rgb: 67 112 255;
+
     flex-shrink: 0;
     width: 340px;
-    background: var(--surface-raised);
-    border: 1px solid var(--rule);
+    /* Locks the marquee's footprint. Card height used to be emergent — every
+       card stretched to whichever headline happened to wrap longest, so the
+       section's height moved whenever the copy did. 12.55rem is the height
+       the original seven-card set settled at; holding it as a floor keeps the
+       band exactly the size it was while the card list grows. */
+    min-height: 12.55rem;
+    display: block;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    background-color: var(--surface-raised);
+    background-image: linear-gradient(
+        180deg,
+        rgb(var(--press-rgb) / 0.10),
+        rgb(var(--press-rgb) / 0.02) 65%,
+        rgb(var(--press-rgb) / 0.02)
+    );
+    /* Same 1px it always was, now tinted rather than neutral. */
+    border: 1px solid rgb(var(--press-rgb) / 0.30);
     border-radius: 16px;
     padding: 1.5rem 1.6rem;
     box-shadow: var(--shadow-card);
+    transition:
+        transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease),
+        border-color 0.25s var(--ease);
 }
 
+/* Accent strip along the top edge. Absolutely positioned so it adds no
+   height; overflow:hidden above clips it to the corner radius. */
+.press-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 3px;
+    background: rgb(var(--press-rgb));
+}
+
+/* Hovering a card already pauses the track, so the lift has time to read.
+   translateY only — nothing here may change the card's layout box. */
+.press-card:hover,
+.press-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgb(var(--press-rgb) / 0.55);
+    box-shadow: 0 10px 28px rgb(var(--press-rgb) / 0.20);
+}
+
+.press-card:focus-visible {
+    outline: 2px solid rgb(var(--press-rgb));
+    outline-offset: 2px;
+}
+
+/* --- Outlet palette ------------------------------------------------------
+   One accent per outlet, each darkened until it clears 4.5:1 against its own
+   tinted card — the outlet name is small bold text, so it is held to the
+   body-text bar rather than the large-text one. Measured on the tint at the
+   top of the gradient, where the ground is most saturated:
+
+     Ars Technica 6.3   CNN 5.6   404 Media 5.5   WIRED 4.8
+     Sci Am 5.8   Forbes 6.2   BBC 6.0   Consumer Reports 6.0
+
+   Card order in the markup keeps any two neighbours on different accents,
+   including across the loop seam. */
+.press-card[data-outlet="ars"]    { --press-rgb: 154  52  18; }  /* #9A3412 */
+.press-card[data-outlet="cnn"]    { --press-rgb: 185  28  28; }  /* #B91C1C */
+.press-card[data-outlet="m404"]   { --press-rgb: 162  28 175; }  /* #A21CAF */
+.press-card[data-outlet="wired"]  { --press-rgb:  15 118 110; }  /* #0F766E */
+.press-card[data-outlet="sciam"]  { --press-rgb:  29  78 216; }  /* #1D4ED8 */
+.press-card[data-outlet="forbes"] { --press-rgb:  22 101  52; }  /* #166534 */
+.press-card[data-outlet="bbc"]    { --press-rgb: 126  34 206; }  /* #7E22CE */
+.press-card[data-outlet="cr"]     { --press-rgb: 133  77  14; }  /* #854D0E */
+
+/* --- Card interior -------------------------------------------------------
+   Spans rather than <p>/<div>: the card is an <a>, so the interior is kept
+   inline-level in the source and made block here. Sizes are untouched. */
 .press-source-row {
     display: flex;
     align-items: center;
@@ -60,16 +147,27 @@
     font-family: var(--font-heading);
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--heading);
+    color: rgb(var(--press-rgb));
 }
 
 .press-date {
     font-size: 0.72rem;
     font-weight: 500;
     color: var(--ink-faint);
+    white-space: nowrap;
+}
+
+/* Marks the card as leaving the site. Sits inside the existing date span so
+   the source row keeps its two flex children and its spacing. */
+.press-date::after {
+    content: "↗";
+    margin-left: 0.4em;
+    font-weight: 700;
+    color: rgb(var(--press-rgb));
 }
 
 .press-headline {
+    display: block;
     font-size: 0.98rem;
     font-weight: 600;
     line-height: 1.45;
@@ -78,8 +176,15 @@
 }
 
 .press-byline {
+    display: block;
     font-size: 0.78rem;
     font-weight: 500;
     color: var(--ink-muted);
     margin-bottom: 0;
+}
+
+/* The lift is decoration; the colour and the underline-free link are not. */
+@media (prefers-reduced-motion: reduce) {
+    .press-card:hover,
+    .press-card:focus-visible { transform: none; }
 }
