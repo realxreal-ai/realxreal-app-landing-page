@@ -160,7 +160,7 @@
     /* --body rather than --ink-muted: the muted token is 55% opacity, which
        lands around 3:1 on this surface. Fine for the small meta text it was
        built for, too weak for a sentence at reading size. */
-    color: var(--body);
+    color: var(--danger);
     margin-bottom: 0.6rem;
 }
 
