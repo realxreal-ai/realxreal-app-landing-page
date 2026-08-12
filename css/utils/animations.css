@@ -12,10 +12,12 @@
 }
 
 /* Phones drift on a long cycle; the right phone runs at a negative delay so
-   the pair is permanently out of phase. */
+   the pair is permanently out of phase. The travel is expressed in the
+   frame's own design-pixel unit so it stays proportional as the mockup
+   scales — see the sizing model in components/phone.css. */
 @keyframes floatPhone {
     0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-12px); }
+    50%      { transform: translateY(calc(-12 * var(--u, 1px))); }
 }
 
 /* Press marquee. The track holds the card set twice, so translating by

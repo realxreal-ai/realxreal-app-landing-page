@@ -73,9 +73,10 @@
     --reading-width: 800px;
     --gutter: 2rem;
 
-    /* Height the fixed nav occupies once condensed. Anchor targets subtract
-       this via scroll-margin-top so headings don't land underneath it. */
-    --nav-offset: 120px;
+    /* Height the fixed nav occupies once condensed, plus breathing room.
+       Anchor targets subtract this via scroll-margin-top so headings don't
+       land underneath it. Tracks the nav's own sizing in layout/nav.css. */
+    --nav-offset: 140px;
 
     /* --- Motion ------------------------------------------------------------ */
     --ease: cubic-bezier(0.4, 0, 0.2, 1);
