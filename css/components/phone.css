@@ -220,21 +220,32 @@
     background: var(--border);
 }
 
+/* "YOUR WORD" / "BOB'S WORD". Sized up from 10.6 design px and taken to
+   solid white — at the old size and 55% opacity these were rendering around
+   8px on a 900px-tall laptop and were effectively unreadable. Weight still
+   separates them from the codeword itself, which is 27.2 and bold. */
 .word-label {
-    font-size: calc(10.6 * var(--u));
+    font-size: calc(15 * var(--u));
     font-weight: 600;
     letter-spacing: calc(1 * var(--u));
-    color: rgba(176, 195, 255, 0.55);
+    color: #fff;
     margin-bottom: calc(8 * var(--u));
     text-transform: uppercase;
     line-height: 1.3;
+
+    /* The longest label, "ALICE'S WORD", is close to its column width at
+       this size; keeping it on one line preserves the row's alignment. */
+    white-space: nowrap;
 }
 
+/* Both codewords in a row share the same blue. They are the two halves of
+   one rotating pair, so colouring them differently implied a distinction
+   that isn't there — the point is that the two devices agree. */
 .word-value {
     font-family: var(--font-mono);
     font-size: calc(27.2 * var(--u));
     font-weight: 700;
-    color: #fff;
+    color: var(--secondary);
     display: inline-block;
     line-height: 1.2;
 
@@ -243,7 +254,6 @@
     min-height: calc(32 * var(--u));
     transition: opacity 0.28s var(--ease), transform 0.28s var(--ease);
 }
-.word-col.theirs .word-value { color: var(--secondary); }
 
 /* Applied by the rotation engine for the duration of the crossfade. The JS
    timeout that swaps the text must stay in step with this transition. */
