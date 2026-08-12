@@ -321,43 +321,72 @@
          the drop from a saturated band to a clean one is the section's
          pivot from agitation to argument. -->
     <div class="oldway-objection">
-        <div class="container">
 
-            <div class="oldway-objection-header">
-                <p class="oldway-leadin">Even if you already have a family codeword —</p>
-                <h3 class="oldway-objection-title">Here's why it breaks the moment you actually need it.</h3>
-            </div>
+        <!-- Full-bleed by omission: no .container and no horizontal padding,
+             so it fills the section the same way .press-section and
+             .oldway-part1 fill theirs. Deliberately not 100vw — that ignores
+             the scrollbar and overflows by its width.
 
-            <!-- Was a dl/dt/dd. Now one <article> per panel with a heading and
-                 a paragraph, which keeps the question/answer pairing explicit
-                 while letting each panel be its own reveal target. -->
-            <div class="oldway-qa">
-                <article class="oldway-qa-item fade-in">
-                    <h4 class="oldway-qa-question">What happens when you forget it?</h4>
-                    <p class="oldway-qa-answer">Mid-panic, at 2am, you're trying to recall a word from six months ago — not use one <span class="oldway-accent-dark">your phone already remembers for you</span>.</p>
-                </article>
+             Left half: the header, then a 2 x 2 of objections beneath it.
+             Right half: the conclusion, spanning both.
+             Everything abuts, separated by hairlines rather than gaps. -->
+        <div class="oldway-objection-layout">
 
-                <article class="oldway-qa-item fade-in">
-                    <h4 class="oldway-qa-question">Who says it first?</h4>
-                    <p class="oldway-qa-answer">Whoever speaks first can't prove anything. You're both just trusting that the other person went first — which means <span class="oldway-accent-dark">neither of you actually proved anything</span>.</p>
-                </article>
+            <!-- The header lives inside the left column rather than above the
+                 split, so the right panel's height is driven by the whole
+                 column — header and grid together — not just the grid. -->
+            <div class="oldway-qa-column">
 
-                <article class="oldway-qa-item fade-in">
-                    <h4 class="oldway-qa-question">What if the cloned voice just asks for it?</h4>
-                    <p class="oldway-qa-answer">A convincing enough clone can ask a panicked family member for the word directly — and get it, <span class="oldway-accent-dark">before anyone thinks to be suspicious</span>.</p>
-                </article>
+                <div class="oldway-objection-header">
+                    <p class="oldway-leadin">Even if you already have a family codeword —</p>
+                    <h3 class="oldway-objection-title">Here's why it breaks the moment you actually need it.</h3>
+                </div>
 
-                <article class="oldway-qa-item fade-in">
-                    <h4 class="oldway-qa-question">Why does everyone share the same word?</h4>
-                    <p class="oldway-qa-answer">Your coworker, your mom, and your college roommate <span class="oldway-accent-dark">don't need — or deserve — the same secret</span>.</p>
-                </article>
+                <div class="oldway-qa">
+                    <article class="oldway-qa-item">
+                        <!-- The reveal is on the content, not the quadrant: fading
+                             the quadrant itself would fade its colour block and
+                             punch a hole in the grid. -->
+                        <div class="oldway-qa-content fade-in">
+                            <h4 class="oldway-qa-question">What happens when you forget it?</h4>
+                            <p class="oldway-qa-answer">Mid-panic, at 2am, you're trying to recall a word from six months ago — not use one <span class="oldway-accent-dark">your phone already remembers for you</span>.</p>
+                        </div>
+                    </article>
+
+                    <article class="oldway-qa-item">
+                        <div class="oldway-qa-content fade-in">
+                            <h4 class="oldway-qa-question">Who says it first?</h4>
+                            <p class="oldway-qa-answer">Whoever speaks first can't prove anything. You're both just trusting that the other person went first — which means <span class="oldway-accent-dark">neither of you actually proved anything</span>.</p>
+                        </div>
+                    </article>
+
+                    <article class="oldway-qa-item">
+                        <div class="oldway-qa-content fade-in">
+                            <h4 class="oldway-qa-question">What if the cloned voice just asks for it?</h4>
+                            <p class="oldway-qa-answer">A convincing enough clone can ask a panicked family member for the word directly — and get it, <span class="oldway-accent-dark">before anyone thinks to be suspicious</span>.</p>
+                        </div>
+                    </article>
+
+                    <article class="oldway-qa-item">
+                        <div class="oldway-qa-content fade-in">
+                            <h4 class="oldway-qa-question">Why does everyone share the same word?</h4>
+                            <p class="oldway-qa-answer">Your coworker, your mom, and your college roommate <span class="oldway-accent-dark">don't need — or deserve — the same secret</span>.</p>
+                        </div>
+                    </article>
+                </div>
+
             </div>
 
             <!-- Hands off to the statement section directly below. -->
-            <p class="oldway-bridge">
-                A codeword only works if it changes constantly, lives on the device instead of in memory, and is different for every person you trust.
-                <strong>That's the whole idea behind realxreal.</strong>
-            </p>
+            <div class="oldway-bridge">
+                <p class="oldway-bridge-lead">A codeword only works if ...</p>
+                <ol class="oldway-bridge-list">
+                    <li>it changes constantly</li>
+                    <li>securely lives on the device instead of in memory</li>
+                    <li>and is different for every person you trust</li>
+                </ol>
+                <p class="oldway-bridge-close"><strong>That's the whole idea behind realxreal.</strong></p>
+            </div>
 
         </div>
     </div>

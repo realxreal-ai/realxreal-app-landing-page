@@ -122,164 +122,303 @@
 }
 
 /* ==========================================================================
-   Part 2 — the white band
+   Part 2 — the objection grid
+   Flat, full-bleed, edge to edge: one rectangle spanning the viewport, split
+   50/50. The left half stacks the header over a 2 x 2 of objections; the
+   right half is a single block of --secondary-dark carrying the conclusion,
+   spanning the whole left column — header and grid together.
+
+   Nothing here floats. No radius, no shadow, no gap — panels abut directly
+   and are separated by hairlines in --rule. Whitespace lives *inside* each
+   panel as padding, never between them.
    ========================================================================== */
 .oldway-objection {
-    padding: 6rem 0;
+    /* No padding at all. The top edge sits flush against the blue band above
+       so the two bands meet with no white seam, and the bottom runs into the
+       next section so the colour blocks meet it directly. All whitespace in
+       this part lives inside the panels. */
+    padding: 0;
     background: var(--surface);
 }
 
+/* --- Header: the left column's top strip --------------------------------
+   Inside the left column rather than above the split, which is what makes
+   the right panel span the full height — header and grid together — rather
+   than only the grid. Left-aligned and padded like the quadrants beneath
+   it, and separated from them by the same hairline: it is a band of the
+   grid now, not a caption floating over one. */
 .oldway-objection-header {
-    text-align: center;
-    max-width: 46rem;
-    margin: 0 auto 3.5rem;
+    padding: clamp(2.25rem, 3vw, 3.75rem) clamp(1.75rem, 2.4vw, 3rem);
+    background: var(--surface-raised);
+    border-bottom: 1px solid var(--rule);
 }
 
-/* --body rather than --ink-muted: the muted token is 55% opacity, which
-   lands around 3:1 on this surface. Fine for the small meta text it was
-   built for, too weak for a sentence at reading size. */
 .oldway-leadin {
-    font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+    font-size: clamp(1.3rem, 1.85vw, 1.75rem);
     font-weight: 600;
-    line-height: 1.5;
+    line-height: 1.45;
+    /* --body rather than --ink-muted: the muted token is 55% opacity, which
+       lands around 3:1 on this surface. Fine for the small meta text it was
+       built for, too weak for a sentence at reading size. */
     color: var(--body);
-    margin-bottom: 0.65rem;
+    margin-bottom: 0.6rem;
 }
 
+/* Matched to .oldway-title in the band above: this is the second half of the
+   section's argument and should carry the same weight as the first, not read
+   as a subheading over it. Still under .oldway-bridge-close, which stays the
+   largest thing in the component. */
 .oldway-objection-title {
     font-family: var(--font-heading);
-    font-size: clamp(1.6rem, 2.6vw, 2.35rem);
+    font-size: clamp(2rem, 3.25vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+    text-wrap: balance;
+    margin-bottom: 0;
+}
+
+/* --- The full-bleed rectangle -------------------------------------------
+   Width comes from the section, which is an unconstrained block — so this
+   is viewport-wide without 100vw, and therefore without 100vw's habit of
+   ignoring the scrollbar and overflowing by its width. */
+.oldway-objection-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    align-items: stretch;
+}
+
+/* --- Left half: header over the 2 x 2 ------------------------------------
+   auto / 1fr: the header takes exactly the height its own type needs, and
+   the quadrant grid absorbs everything left over — including any extra the
+   right panel forces onto the row. */
+.oldway-qa-column {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    /* The seam between the two halves, carried on the light side where a
+       --rule hairline actually reads. It sits on the column rather than the
+       grid so it runs past the header too. */
+    border-right: 1px solid var(--rule);
+}
+
+.oldway-qa {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0;
+    /* Lets the 1fr track shrink to its share of the row instead of being
+       floored by the quadrants' content height. */
+    min-height: 0;
+}
+
+.oldway-qa-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Internal padding only — this is the whitespace that used to sit
+       between the cards, moved inside them. */
+    padding: clamp(2rem, 3vw, 3.75rem) clamp(1.75rem, 2.4vw, 3rem);
+    background: var(--surface-raised);
+    /* Hairlines instead of gaps. */
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+}
+
+/* Checkerboard of two neighbouring surface tokens — barely perceptible on
+   its own, but enough to keep four abutting panels from reading as one
+   undifferentiated field. */
+.oldway-qa-item:nth-child(2),
+.oldway-qa-item:nth-child(3) { background: var(--surface-sunken); }
+
+/* Outer edges carry no line: the right column meets the seam above, the
+   bottom row meets the next section. */
+.oldway-qa-item:nth-child(2n) { border-right: none; }
+.oldway-qa-item:nth-child(n + 3) { border-bottom: none; }
+
+.oldway-qa-question {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 2.25vw, 2.3rem);
     font-weight: 700;
     line-height: 1.25;
     letter-spacing: -0.02em;
     color: var(--heading);
+    margin-bottom: 0.85rem;
     text-wrap: balance;
 }
 
-/* --- Q&A panels ----------------------------------------------------------
-   2 x 2 on desktop. Card treatment matches .press-card so the light panels
-   across the page stay one family. */
-.oldway-qa {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.75rem;
-    max-width: 62rem;
-    margin: 0 auto;
-}
-
-.oldway-qa-item {
-    background: var(--surface-raised);
-    border: 1px solid var(--rule);
-    border-radius: 20px;
-    padding: 2.25rem 2rem;
-    box-shadow: var(--shadow-card);
-}
-
-.oldway-qa-question {
-    font-family: var(--font-heading);
-    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: -0.01em;
-    color: var(--heading);
-    margin-bottom: 0.85rem;
-}
-
 .oldway-qa-answer {
-    font-size: clamp(1.12rem, 1.4vw, 1.35rem);
+    font-size: clamp(1.2rem, 1.65vw, 1.6rem);
     font-weight: 500;
-    line-height: 1.65;
+    line-height: 1.55;
     color: var(--body);
     margin-bottom: 0;
 }
 
-/* Emphasis on white, the inverse of .oldway-accent. */
+/* Emphasis on the light panels. Unchanged from the card version — the
+   contrast reasoning does not depend on the panel having been a card. */
 .oldway-accent-dark {
     color: var(--primary-dark);
     font-weight: 700;
 }
+
+/* --- Right half: the conclusion ------------------------------------------
+   Solid --secondary-dark (#B0C3FF), full height, full 50%.
+
+   Text colour was worked out against this ground and carries over as-is:
+   --primary reaches only 2.4:1 here and fails even the large-text bar,
+   while --heading and --bg-dark both clear 10:1. Emphasis is carried by
+   weight and size rather than by the lighter blue. */
+.oldway-bridge {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: clamp(3rem, 5vw, 6rem) clamp(2rem, 4vw, 5rem);
+    background: var(--secondary-dark);
+}
+
+.oldway-bridge-lead {
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--heading);
+    margin-bottom: 1.75rem;
+    /* Keeps the trailing ellipsis from being orphaned on its own line on a
+       narrow screen. */
+    text-wrap: balance;
+}
+
+/* The reset clears list-style site-wide, so the numerals are drawn from a
+   counter rather than the UA marker. */
+.oldway-bridge-list {
+    counter-reset: bridge-step;
+    margin: 0 0 2rem;
+}
+
+.oldway-bridge-list li {
+    counter-increment: bridge-step;
+    position: relative;
+    padding-left: 2.5rem;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 3.1vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+}
+.oldway-bridge-list li + li { margin-top: 1.1rem; }
+
+.oldway-bridge-list li::before {
+    content: counter(bridge-step) ".";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 700;
+    /* 3.3:1 — below the 4.5:1 body-text bar but above the 3:1 large-text
+       one, which these numerals clear at this size and weight. */
+    color: var(--primary-dark);
+}
+
+.oldway-bridge-close {
+    margin: 0;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(15, 4, 53, 0.18);
+    font-family: var(--font-heading);
+    font-size: clamp(2.2rem, 3.6vw, 3.7rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    /* The darkest brand token — the strongest reading available on this
+       pale ground, and the section's last word. */
+    color: var(--bg-dark);
+    text-wrap: balance;
+}
+.oldway-bridge-close strong { font-weight: 700; color: inherit; }
 
 /* ==========================================================================
    Part 2 reveal
    Base opacity/translate comes from the site's .fade-in utility, driven by
    initFadeInObserver(). Layered on top of it here:
 
-     - a stagger, so the four panels arrive one after another instead of as
-       one block
+     - a stagger, so the four quadrants arrive one after another instead of
+       as one block
      - a slightly firmer entrance on the question itself (a small scale-up),
        so the question pops a beat ahead of its answer
 
    The stagger is a transition-delay rather than a JS timer, which keeps it
    inside the existing observer's behaviour: the delay only starts counting
-   once .visible lands on that individual panel.
-   ========================================================================== */
-.oldway-qa .oldway-qa-item:nth-child(1) { transition-delay: 0ms; }
-.oldway-qa .oldway-qa-item:nth-child(2) { transition-delay: 120ms; }
-.oldway-qa .oldway-qa-item:nth-child(3) { transition-delay: 240ms; }
-.oldway-qa .oldway-qa-item:nth-child(4) { transition-delay: 360ms; }
+   once .visible lands on that individual element.
 
-.oldway-qa-item .oldway-qa-question {
+   .fade-in sits on .oldway-qa-content, not on the quadrant — the quadrant
+   is a solid colour block now, and fading it would leave a gap in the grid.
+   ========================================================================== */
+.oldway-qa-item:nth-child(1) .oldway-qa-content { transition-delay: 0ms; }
+.oldway-qa-item:nth-child(2) .oldway-qa-content { transition-delay: 120ms; }
+.oldway-qa-item:nth-child(3) .oldway-qa-content { transition-delay: 240ms; }
+.oldway-qa-item:nth-child(4) .oldway-qa-content { transition-delay: 360ms; }
+
+.oldway-qa-content .oldway-qa-question {
     opacity: 0;
     transform: scale(0.96) translateY(6px);
     transition:
         opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.oldway-qa-item.visible .oldway-qa-question {
+.oldway-qa-content.visible .oldway-qa-question {
     opacity: 1;
     transform: none;
 }
 
-/* Question trails its own panel by a beat, on top of the panel's stagger. */
-.oldway-qa .oldway-qa-item:nth-child(1) .oldway-qa-question { transition-delay: 90ms; }
-.oldway-qa .oldway-qa-item:nth-child(2) .oldway-qa-question { transition-delay: 210ms; }
-.oldway-qa .oldway-qa-item:nth-child(3) .oldway-qa-question { transition-delay: 330ms; }
-.oldway-qa .oldway-qa-item:nth-child(4) .oldway-qa-question { transition-delay: 450ms; }
-
-/* --- Closing bridge ------------------------------------------------------ */
-.oldway-bridge {
-    max-width: 54rem;
-    margin: 5rem auto 0;
-    text-align: center;
-    font-family: var(--font-heading);
-    font-size: clamp(1.5rem, 2.5vw, 2.25rem);
-    font-weight: 600;
-    line-height: 1.4;
-    letter-spacing: -0.01em;
-    color: var(--heading);
-    text-wrap: balance;
-}
-
-.oldway-bridge strong {
-    color: var(--primary);
-    font-weight: 700;
-}
+/* Question trails its own quadrant by a beat, on top of the stagger. */
+.oldway-qa-item:nth-child(1) .oldway-qa-question { transition-delay: 90ms; }
+.oldway-qa-item:nth-child(2) .oldway-qa-question { transition-delay: 210ms; }
+.oldway-qa-item:nth-child(3) .oldway-qa-question { transition-delay: 330ms; }
+.oldway-qa-item:nth-child(4) .oldway-qa-question { transition-delay: 450ms; }
 
 /* ==========================================================================
    Responsive
-   Collapses at 900px, the breakpoint .statement-container and the legal
-   layout already use.
    ========================================================================== */
-@media (max-width: 1100px) {
-    .oldway-card { padding: 2rem 1.75rem; }
-    .oldway-qa-item { padding: 2rem 1.75rem; }
+
+/* Stacked, still edge to edge: one column, panels abutting vertically with
+   the same hairlines, no gaps reintroduced. */
+@media (max-width: 999px) {
+    .oldway-objection-layout { grid-template-columns: 1fr; }
+
+    /* Header still leads the column, so the stacked order matches desktop:
+       header, then the four panels, then the bridge. */
+    .oldway-qa-column {
+        grid-template-rows: auto auto;
+        border-right: none;
+    }
+
+    .oldway-qa {
+        grid-template-columns: 1fr;
+        /* The explicit two rows only describe the 2 x 2. Left in place, four
+           panels would fill two stretched rows and spill into implicit auto
+           ones, leaving the first two taller than the last two. */
+        grid-template-rows: none;
+    }
+
+    .oldway-qa-item {
+        border-right: none;
+        border-bottom: 1px solid var(--rule);
+    }
+    /* Restores the line the 2 x 2 rules above remove from the bottom row. */
+    .oldway-qa-item:nth-child(n + 3) { border-bottom: 1px solid var(--rule); }
 }
 
 @media (max-width: 900px) {
-    .oldway-part1,
-    .oldway-objection { padding: 4.5rem 0; }
+    .oldway-part1 { padding: 4.5rem 0; }
 
-    .oldway-header,
-    .oldway-objection-header { margin-bottom: 2.5rem; }
+    .oldway-header { margin-bottom: 2.5rem; }
 
-    .oldway-grid,
-    .oldway-qa { grid-template-columns: minmax(0, 1fr); }
+    .oldway-grid { grid-template-columns: minmax(0, 1fr); }
 
     /* Stacked, the tiles are sized by their copy — a fixed square would
        leave large dead areas on the shorter two. */
     .oldway-card { min-height: 0; }
-
-    .oldway-bridge { margin-top: 3.5rem; }
 }
 
 /* ==========================================================================
@@ -289,8 +428,8 @@
    undo it.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-    .oldway-qa-item .oldway-qa-question,
-    .oldway-qa-item.visible .oldway-qa-question {
+    .oldway-qa-content .oldway-qa-question,
+    .oldway-qa-content.visible .oldway-qa-question {
         opacity: 1;
         transform: none;
     }
