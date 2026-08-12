@@ -1,0 +1,99 @@
+/* ==========================================================================
+   How It Works
+   Three steps, each a light card carrying its own screenshot. Contained to
+   --content-width like the rest of the site's standard sections; explicitly
+   not the full-bleed treatment used by the objection grid, which was a
+   one-off for that beat.
+
+   The screenshot treatment is lifted from .statement-screenshot — same
+   drop-shadow, same hover lift — because these are the same kind of asset
+   and should not arrive with a second, competing presentation.
+   ========================================================================== */
+.steps-section {
+    padding: 6rem 0;
+    background: var(--surface);
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 2rem;
+    /* The reset clears list-style; these are an <ol> for the sequence to be
+       real in the document, not for a marker. */
+    list-style: none;
+}
+
+.step-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-raised);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 2.25rem 2rem 0;
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+}
+
+/* "Step 1" and "Choose your rotation" are the two halves of the supplied
+   heading, split at its em dash rather than reworded. */
+.step-eyebrow {
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 0.6rem;
+}
+
+.step-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+    margin-bottom: 0.85rem;
+}
+
+.step-body {
+    font-size: clamp(1rem, 1.15vw, 1.1rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--body);
+    /* Pins the screenshot to the card floor so all three line up regardless
+       of how their copy wraps. */
+    margin-bottom: auto;
+}
+
+/* The screenshot is bled to the card's side edges and allowed to run past
+   its bottom, so the phone reads as sitting inside the card rather than
+   being pasted onto it. */
+.step-shot {
+    display: flex;
+    justify-content: center;
+    margin: 2rem -2rem 0;
+}
+
+.step-shot img {
+    width: 100%;
+    max-width: 260px;
+    height: auto;
+    /* Matches .statement-screenshot. */
+    filter: drop-shadow(0 30px 70px rgba(15, 4, 53, 0.18));
+    transition: transform 0.4s var(--ease);
+}
+
+.step-card:hover .step-shot img {
+    transform: translateY(-8px);
+}
+
+@media (max-width: 900px) {
+    .steps-section { padding: 4.5rem 0; }
+    .steps-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+    .step-shot img { max-width: 240px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .step-card:hover .step-shot img { transform: none; }
+}

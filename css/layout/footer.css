@@ -2,10 +2,19 @@
    Footer
    Four-column brand + link grid, collapsing to a single column on mobile.
    ========================================================================== */
+/* The footer is the one block on the page that inverts: brand blue ground,
+   white ink. Every color below is therefore expressed as white at an opacity
+   rather than as an ink token — the ink tokens are all tuned against the
+   light surface and would disappear here. */
 .site-footer {
     padding: 4rem var(--gutter) 2rem;
-    border-top: 1px solid var(--rule);
-    background: var(--surface-sunken);
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    background: var(--primary-dark);
+    color: #fff;
+}
+
+.site-footer .nav-logo-text {
+    color: #fff;
 }
 
 .footer-container {
@@ -17,16 +26,30 @@
 }
 
 .footer-brand p {
-    color: var(--ink-muted);
+    color: rgba(255, 255, 255, 0.75);
     margin-top: 0.75rem;
     margin-bottom: 0;
     line-height: 1.6;
     font-size: 0.95rem;
 }
 
+/* The positioning line. It carries the product's whole claim in four words,
+   so it is set at full strength rather than the muted weight the rest of the
+   brand column uses. */
+/* Two classes deep on purpose: `.footer-brand p` above is (0,1,1) and would
+   otherwise drag the size back down to 0.95rem. */
+.footer-brand .footer-mission {
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    margin-top: 1rem;
+}
+
 .footer-tagline {
     font-weight: 600;
-    color: var(--body) !important;
+    color: rgba(255, 255, 255, 0.85) !important;
     margin-top: 0.5rem !important;
 }
 
@@ -34,21 +57,26 @@
     font-size: 0.9rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: var(--ink-muted);
+    color: rgba(255, 255, 255, 0.65);
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-.footer-links a {
+/* Scoped away from .social-link: `.footer-links a` is (0,1,1) and would
+   outrank the `.social-link` class (0,1,0), taking over the icon's display,
+   color and spacing — it did exactly that, flattening the flex-centered
+   icon box to a block and painting the glyphs in body ink. The nav solves
+   the identical collision the same way; see css/layout/nav.css. */
+.footer-links a:not(.social-link) {
     display: block;
-    color: var(--body);
+    color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     margin-bottom: 0.6rem;
     font-size: 0.95rem;
     transition: color var(--transition-fast);
 }
-.footer-links a:hover {
-    color: var(--primary);
+.footer-links a:not(.social-link):hover {
+    color: #fff;
     text-decoration: none;
 }
 
@@ -65,21 +93,27 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: rgba(67, 112, 255, 0.1);
-    color: var(--primary);
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
     margin-bottom: 0;
     transition: all var(--transition-fast);
 }
 .social-link:hover {
-    background: rgba(67, 112, 255, 0.2);
+    background: rgba(255, 255, 255, 0.26);
     transform: translateY(-2px);
+}
+/* The glyphs are painted with `fill="currentColor"`, so they inherit the
+   white above; the explicit rule keeps that true if a parent color changes. */
+.social-link svg {
+    display: block;
+    fill: currentColor;
 }
 
 .footer-bottom {
     text-align: center;
     padding-top: 2rem;
-    border-top: 1px solid var(--rule);
-    color: var(--ink-faint);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.85rem;
 }
 .footer-bottom p { margin-bottom: 0; }

@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Use Cases
+   Four light cards in a 2 x 2 on wide screens, one column on narrow. Same
+   card construction as .attack-card so the two informational bands below the
+   statement read as one family; the difference between them is the ground
+   they sit on, not the card.
+   ========================================================================== */
+.usecases-section {
+    padding: 6rem 0;
+    background: var(--surface);
+}
+
+.usecases-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+}
+
+.usecase-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-raised);
+    border: 1px solid var(--rule);
+    border-radius: 20px;
+    padding: 2.5rem 2.25rem;
+    box-shadow: var(--shadow-card);
+}
+
+/* A short accent rule above the title, the same device the press cards use
+   to lead their byline — a quiet way to mark a card's start without adding
+   an icon this content does not need. */
+.usecase-card::before {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.usecase-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.35rem, 1.9vw, 1.75rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--heading);
+    margin-bottom: 0.85rem;
+}
+
+.usecase-body {
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--body);
+    margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+    .usecases-section { padding: 4.5rem 0; }
+    .usecases-grid { grid-template-columns: minmax(0, 1fr); gap: 1.75rem; }
+}

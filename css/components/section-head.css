@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Section head
+   The shared heading block for the site's standard informational sections:
+   a small tracked label over an optional larger line.
+
+   It exists because three sections needed the same header and the site had
+   no shared one — the older .section-header component was removed in the
+   pivot refactor and only survives in history. The label is sized to match
+   .press-eyebrow so the two read as the same device rather than as two
+   near-identical decisions.
+
+   The label is an <h2> in the markup: these sections need a real heading in
+   the document outline, and it is the only line every one of them has.
+   ========================================================================== */
+.section-head {
+    /* Same measure the site already uses for centred section copy. */
+    max-width: 46rem;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+}
+
+.section-eyebrow {
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--heading);
+    margin-bottom: 1.1rem;
+}
+
+/* The headline role where a section has one. Sits a step below .oldway-title
+   so the agitation beat above stays the loudest moment on the page. */
+.section-subhead {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 2.9vw, 2.65rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+    text-wrap: balance;
+    margin-bottom: 0;
+}
+
+/* For a section whose header carries an explanatory paragraph rather than a
+   headline. Kept at reading size — it is a sentence to be read, not a
+   display line to be scanned. */
+.section-lede {
+    font-size: clamp(1.15rem, 1.75vw, 1.5rem);
+    font-weight: 500;
+    line-height: 1.55;
+    color: var(--body);
+    text-wrap: balance;
+    margin-bottom: 0;
+}
+
+.section-lede strong {
+    color: var(--heading);
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .section-head { margin-bottom: 2.5rem; }
+}
