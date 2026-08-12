@@ -38,11 +38,11 @@
         </a>
 
         <ul class="nav-menu" data-nav-menu>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#screenshots">Screenshots</a></li>
+            <li><a href="#why-codewords">Why Codewords</a></li>
             <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#attacks">Attacks We Prevent</a></li>
             <li><a href="privacy.html">Privacy</a></li>
-            <li><a href="#download" class="nav-cta">Download</a></li>
+            <li><a href="#hero" class="nav-cta">Download</a></li>
         </ul>
 
         <button class="mobile-menu-toggle" data-nav-toggle aria-label="Toggle menu" aria-expanded="false">☰</button>
@@ -51,7 +51,7 @@
 
 <!-- Two columns on desktop (copy | phone pair), stacking below 1000px.
      See the note at the top of css/layout/container.css for why. -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="hero-inner">
     <div class="hero-copy">
     <img class="hero-logo-mark" src="images/realxreal-dark-logo.png" alt="realxreal logo">
@@ -457,7 +457,7 @@
     <!-- Part 2 — the family codeword problem. Deliberately back on white:
          the drop from a saturated band to a clean one is the section's
          pivot from agitation to argument. -->
-    <div class="oldway-objection">
+    <div class="oldway-objection" id="why-codewords">
 
         <!-- Full-bleed by omission: no .container and no horizontal padding,
              so it fills the section the same way .press-section and
@@ -557,7 +557,7 @@
      claim. Contained width and ordinary cards: the full-bleed quadrant
      treatment belongs to the objection grid alone.
      ========================================================================== -->
-<section class="steps-section">
+<section class="steps-section" id="how-it-works">
     <div class="container">
 
         <header class="section-head">
@@ -615,12 +615,12 @@
      Every icon here is a generic outline shape. No third-party brand marks
      are used to stand in for messaging platforms.
      ========================================================================== -->
-<section class="attacks-section">
+<section class="attacks-section" id="attacks">
     <div class="container">
 
         <header class="section-head">
             <h2 class="section-eyebrow">Attacks We Prevent</h2>
-            <p class="section-lede">Traditional MFA proves a device is yours. realxreal proves the person on the other end is who they claim to be — a codeword tied to their device, not their voice or their face.</p>
+            <p class="section-lede">Traditional MFA proves a device is yours. realxreal proves the person on the other end is who they claim to be.</p>
         </header>
 
         <div class="attacks-grid">
@@ -716,6 +716,52 @@
 
     </div>
 </section>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo">
+          <div class="nav-logo-img">
+            <img src="images/realxreal-dark-logo.png" alt="realxreal logo">
+          </div>
+          <span class="nav-logo-text">real×real</span>
+        </a>
+        <p class="footer-mission">MFA for people.</p>
+        <p class="footer-tagline">Real Recognizes Real. Open source, privacy-first, human-centric.</p>
+      </div>
+
+      <div class="footer-links">
+        <h4>Product</h4>
+        <a href="#why-codewords">Why Codewords</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#attacks">Attacks We Prevent</a>
+        <a href="#hero">Download</a>
+        <a href="https://realxreal.ai" target="_blank" rel="noopener noreferrer">About the Company</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Legal</h4>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="privacy.html#terms">Terms of Service</a>
+      </div>
+
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <div class="social-links">
+          <a href="https://x.com/realxreal_ai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Twitter">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+          </a>
+          <a href="https://github.com/realxreal-ai" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="GitHub">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span data-role="year">2026</span> Real Recognizes Real AI, PBC. All Rights Reserved.</p>
+    </div>
+  </footer>
 
   <script type="module" src="js/main.js"></script>
 </body>
