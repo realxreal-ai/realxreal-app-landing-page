@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Design Tokens
+   The single source of truth for color, type, spacing rhythm and elevation.
+   Nothing in this file selects an element — it only declares values, so it
+   must be imported first.
+
+   Brand palette is unchanged from the original realxreal.app style.css.
+   What is new is the light-mode surface pairing: the site now renders dark
+   ink on a near-white ground, while the phone mockups stay pinned to the
+   original dark palette so they pop against it.
+   ========================================================================== */
+:root {
+    /* --- Type families ---------------------------------------------------- */
+    --font-heading: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace; /* reserved for in-app codewords only */
+
+    /* --- Brand palette (unchanged) ---------------------------------------- */
+    --bg-dark: #0F0435;
+    --text-dark: #B0C3FF;
+    --primary: #4370FF;
+    --secondary: #94eFFF;
+    --primary-dark: #404AFF;
+    --secondary-dark: #B0C3FF;
+    --success: #34D399;
+    --bg-secondary: #150a45;
+
+    /* Border token is scoped to the dark phone screens, where it originated. */
+    --border: rgba(176, 195, 255, 0.15);
+
+    /* --- Light surface (the page itself) ---------------------------------- */
+    --surface: #fefefe;
+    --surface-raised: #ffffff;
+    --surface-sunken: #FBFBFD;
+    --heading: #0B0F2E;
+    --body: #3A3F5C;
+
+    /* Ink at reduced strength, for captions, meta rows and hairlines.
+       Expressed as rgba rather than opacity so text can sit on top of the
+       background blobs without the blob bleeding through the glyphs. */
+    --ink-muted: rgba(58, 63, 92, 0.55);
+    --ink-faint: rgba(58, 63, 92, 0.5);
+    --rule: rgba(15, 4, 53, 0.08);
+    --rule-soft: rgba(15, 4, 53, 0.06);
+
+    /* --- Semantic accents -------------------------------------------------- */
+    /* Danger is used for the one line on the site that is a warning rather
+       than a feature: "it's not them." Tuned to clear 3:1 against --surface
+       at display sizes while still reading as a sibling of the brand blue. */
+    --danger: #E5484D;
+
+    /* --- Wordmark ---------------------------------------------------------
+       Three-color treatment for real×real. secondary/secondary-dark are
+       pastel and don't hold contrast on white, so the "x" uses a darker ink
+       pulled from the same cyan hue. */
+    --wordmark-real1: var(--heading);
+    --wordmark-x: #0E8FA8;
+    --wordmark-real2: var(--primary);
+
+    /* Light purple — for the realxreal wordmark specifically, so it stands
+       out against white rather than reading as near-black text. */
+    --brand-light-purple: #8C7CF0;
+
+    /* --- Elevation --------------------------------------------------------- */
+    --shadow-card: 0 4px 16px rgba(15, 4, 53, 0.04);
+    --shadow-nav: 0 4px 24px rgba(15, 4, 53, 0.05);
+    --shadow-menu: 0 12px 30px rgba(15, 4, 53, 0.08);
+    --shadow-cta: 0 10px 28px rgba(67, 112, 255, 0.28);
+    --shadow-cta-hover: 0 14px 36px rgba(67, 112, 255, 0.36);
+
+    /* --- Layout ------------------------------------------------------------ */
+    --content-width: 1200px;
+    --reading-width: 800px;
+    --gutter: 2rem;
+
+    /* Height the fixed nav occupies once condensed, plus breathing room.
+       Anchor targets subtract this via scroll-margin-top so headings don't
+       land underneath it. Tracks the nav's own sizing in layout/nav.css. */
+    --nav-offset: 140px;
+
+    /* --- Motion ------------------------------------------------------------ */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: 0.25s var(--ease);
+    --transition-base: 0.35s var(--ease);
+}

@@ -1,0 +1,56 @@
+/* ==========================================================================
+   Animations
+   Every @keyframes on the site lives here so timings can be compared side
+   by side. Components own the animation shorthand; this file owns the
+   motion itself.
+   ========================================================================== */
+
+/* Ambient glow behind the phone pair. */
+@keyframes pulseGlow {
+    0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+    50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Phones drift on a long cycle; the right phone runs at a negative delay so
+   the pair is permanently out of phase. The travel is expressed in the
+   frame's own design-pixel unit so it stays proportional as the mockup
+   scales — see the sizing model in components/phone.css. */
+@keyframes floatPhone {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(calc(-12 * var(--u, 1px))); }
+}
+
+/* Press marquee. The track holds the card set twice, so translating by
+   exactly -50% lands on an identical frame and the loop has no seam. */
+@keyframes pressScroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-on-load {
+    animation: fadeInUp 0.8s var(--ease) both;
+}
+
+/* ==========================================================================
+   Reduced motion
+   The looping animations here are decorative — none of them communicate
+   state, so they can all be stopped outright. The codeword countdown ring
+   is driven from JS rather than CSS and is intentionally left running,
+   since it is the one animation that carries meaning.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

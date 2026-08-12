@@ -1,27 +1,31 @@
 /* ==========================================================================
-   realxreal.app — Stylesheet Entry Point
-   Imports are ordered to match the cascade the original single file relied
-   on: variables/reset first, then shared typography, then components
-   roughly top-to-bottom as they appear on the page, then legal pages,
-   animations, and responsive overrides last.
+   realxreal — stylesheet manifest
+   The only stylesheet any page links. Import order is the cascade order, so
+   it goes general to specific: tokens → reset → typography → layout →
+   components. Nothing below may be reordered casually.
 
-   To add a new component: create css/NN-name.css and add an @import line
-   below in the right position. Keep the numeric prefixes in file names so
-   directory listings stay in load order.
+   Layout files style page furniture shared across pages (nav, footer,
+   background, containers). Component files style a single named block and
+   are safe to add to or remove without touching anything else.
    ========================================================================== */
 
-@import url('00-variables.css');
-@import url('01-typography.css');
-@import url('02-nav.css');
-@import url('03-hero.css');
-@import url('04-buttons.css');
-@import url('05-problem.css');
-@import url('06-features.css');
-@import url('07-steps.css');
-@import url('08-screenshots.css');
-@import url('09-use-cases.css');
-@import url('10-download.css');
-@import url('11-footer.css');
-@import url('12-legal.css');
-@import url('13-animations.css');
-@import url('14-responsive.css');
+/* --- Base: values, then normalization, then prose defaults --------------- */
+@import url('base/tokens.css');
+@import url('base/reset.css');
+@import url('base/typography.css');
+
+/* --- Utilities: keyframes referenced by the components below ------------- */
+@import url('utils/animations.css');
+
+/* --- Layout: page furniture ---------------------------------------------- */
+@import url('layout/background.css');
+@import url('layout/container.css');
+@import url('layout/nav.css');
+@import url('layout/footer.css');
+
+/* --- Components: one block each ------------------------------------------ */
+@import url('components/buttons.css');
+@import url('components/phone.css');
+@import url('components/press-marquee.css');
+@import url('components/statement.css');
+@import url('components/legal.css');

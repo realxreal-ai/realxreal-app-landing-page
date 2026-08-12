@@ -1,0 +1,200 @@
+/* ==========================================================================
+   Containers & Sections
+   The two width rails used everywhere: --content-width for full sections,
+   --reading-width for prose.
+   ========================================================================== */
+.container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    width: 100%;
+}
+
+.section {
+    padding: 8rem 0;
+    position: relative;
+}
+
+/* ==========================================================================
+   Hero
+   Two columns on desktop: copy (logo, headline, store badges) beside the
+   phone pair, both vertically centered.
+
+   The layout is load-bearing, not stylistic. Stacked in a single column the
+   hero measured 1644px against a 900px laptop viewport — the elements'
+   heights simply summed. Side by side, the required height collapses to
+   "whichever column is taller", which is the phone pair alone.
+
+   The second half of the fix lives in components/phone.css: the mockup is
+   sized from vh rather than a flat pixel height, so the hero scales as one
+   unit instead of clipping the devices off the bottom.
+
+   Everything below is layout and sizing only — colors, fonts and the
+   treatment of each element are unchanged.
+   ========================================================================== */
+.hero {
+    /* svh tracks the *small* viewport height, so a mobile browser showing
+       its address bar can't push the hero taller than the visible area. */
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Vertical padding flexes with the viewport rather than staying rigid
+       at 6rem/4rem. The floor clears the fixed nav — which is 100px tall at
+       the enlarged type size, so 7rem is the smallest value that leaves the
+       logo clear of it; the ceiling stops the hero going airy on a tall
+       monitor. */
+    padding: clamp(7rem, 12vh, 8.5rem) var(--gutter) clamp(2.5rem, 6vh, 4rem);
+    position: relative;
+}
+
+.hero-inner {
+    /* Column gap, published as a variable because the phone pair has to
+       subtract it to work out how much width it actually has. */
+    --hero-gap: clamp(2rem, 4.5vw, 5.5rem);
+
+    /* The hero runs wider than the site's 1200px text rail. It is a
+       showcase rather than a column of prose, and the extra width is what
+       lets the devices stay large while still clearing the copy. */
+    --hero-inner-w: min(1440px, 100vw - 2 * var(--gutter));
+
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+
+    /* The visual column carries the larger share — the devices need the
+       width to grow, while the copy column's widest element (the logo) is
+       capped anyway. The copy share is not pushed below 0.85 on purpose:
+       under roughly 465px the two store badges stop fitting on one line and
+       the row wraps, which costs ~86px of column height. Trading copy width
+       for device width was measured as worth only ~3% on the devices while
+       moving that wrap point from ~1212px up to ~1254px, so the copy keeps
+       its share. Both tracks are minmax(0, …) so a long word can never
+       force the grid wider than its container — a common source of
+       horizontal scroll. */
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: var(--hero-gap);
+    align-items: center;
+}
+
+.hero-copy {
+    text-align: left;
+    min-width: 0;
+}
+
+.hero-visual {
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+}
+
+/* The logo PNG contains the "realxreal" wordmark on a square canvas, so it
+   sits in normal flow above the headline — no ring, no cropping, no
+   separate text repeating the name.
+
+   That canvas is opaque white (the file is RGB with no alpha channel). It
+   went unnoticed while the logo was centered on the white hero, but the
+   two-column layout moves it left, over one of the background's tinted
+   blobs, where the square would otherwise be visible. Multiply drops pure
+   white to nothing and leaves the dark artwork untouched. Re-exporting the
+   asset with real transparency would let this line go.
+
+   Sizing is a three-way minimum, because the logo is bounded by three
+   different things and any one of them can bind first:
+
+     52vh              its share of viewport height, capped at 460px so it
+                       does not balloon on a tall monitor
+     100vh - 440px     the space actually left over. The headline, the
+                       buttons and the hero's padding cost a roughly fixed
+                       ~390px regardless of viewport, so on a short laptop
+                       that remainder — not the percentage — is the real
+                       limit. Without this term the logo overflows the
+                       viewport below about 800px tall.
+     30vw              its column's width. Deliberately tighter than the
+                       track itself: below ~1100px the two store badges no
+                       longer fit side by side and the row wraps to two,
+                       costing an extra ~86px that the vh terms above cannot
+                       see (wrapping is driven by width, they measure
+                       height). Backing the logo off by width is what keeps
+                       headroom positive at 1024x768, where a narrow column
+                       and a short viewport coincide.
+
+   Net effect is roughly 2.8x the previous size at a 900px viewport,
+   tapering to 2.5x on a short laptop. See the note in the reply for why a
+   literal 3x is not safely reachable at every height. */
+.hero-logo-mark {
+    width: min(clamp(160px, 52vh, 460px), 100vh - 440px, 30vw);
+    height: auto;
+    margin: 0 0 clamp(1rem, 2.5vh, 1.75rem);
+    mix-blend-mode: multiply;
+}
+
+h1.hero-title {
+    font-family: var(--font-heading);
+
+    /* Wraps to two lines in the desktop column and three on a phone. The
+       floor stays comfortably readable at 390px; the ceiling keeps it from
+       overrunning its column on a wide display. */
+    font-size: clamp(2.05rem, 3.2vw + 0.5rem, 3.6rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+    margin-bottom: clamp(1.25rem, 3vh, 2rem);
+    color: var(--heading);
+}
+h1.hero-title .accent { color: var(--primary); }
+
+/* The badge row is the last element in the copy column, so it carries no
+   trailing margin here — the column is centered as a whole. */
+.hero-copy .download-badges {
+    justify-content: flex-start;
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Hero — stacked layout
+   Below 1000px the two columns get too narrow to hold both the headline and
+   a legible device — the codewords, which are the whole point of the
+   mockup, stop being readable — so the hero returns to a single centered
+   column. Tablet portrait (768px) lands here deliberately. Scrolling
+   through the hero at these widths is expected and fine.
+   ========================================================================== */
+@media (max-width: 999px) {
+    .hero {
+        /* No longer a single-screen promise once stacked, so the floor is
+           dropped and the section is free to size to its content. */
+        min-height: 0;
+        padding-top: clamp(7rem, 14vh, 8.5rem);
+    }
+
+    .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .hero-copy { text-align: center; }
+
+    /* Stacked, the binding constraint flips from height to width — a phone
+       screen simply isn't wide enough for a 3x mark, so this grows as far
+       as the viewport allows and stops. The max keeps it sane on tablet. */
+    .hero-logo-mark {
+        width: clamp(190px, 56vw, 320px);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-copy .download-badges { justify-content: center; }
+}
+
+.hero-description {
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--body);
+    max-width: 600px;
+    margin: 0 auto 2.75rem;
+}

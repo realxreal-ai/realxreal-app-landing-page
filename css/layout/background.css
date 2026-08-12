@@ -1,0 +1,42 @@
+/* ==========================================================================
+   Background Texture
+   Layered: soft brand-colored blobs + fine film grain. Deliberately not a
+   repeating tile — that avoids the "AI-generated grid" look while staying
+   subtle enough that white still reads as white.
+
+   Fixed and pushed behind the page (z-index: -2) so it survives scrolling
+   without repainting on every frame.
+   ========================================================================== */
+.bg-texture {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    background: var(--surface);
+    pointer-events: none;
+}
+
+/* Blob layer. */
+.bg-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 900px 620px at 12% 8%, rgba(67, 112, 255, 0.055), transparent 60%),
+        radial-gradient(ellipse 800px 640px at 88% 78%, rgba(148, 239, 255, 0.07), transparent 60%),
+        radial-gradient(ellipse 600px 500px at 50% 45%, rgba(67, 112, 255, 0.03), transparent 65%);
+}
+
+/* Grain layer — an inline SVG feTurbulence, multiplied over the blobs so it
+   darkens rather than washes them out. */
+.bg-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+}

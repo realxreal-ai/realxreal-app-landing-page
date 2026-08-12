@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Statement + Screenshot
+   Display-sized claim paired with the app's home screen.
+   ========================================================================== */
+.statement-section {
+    padding: 6rem var(--gutter);
+    background: var(--surface);
+}
+
+.statement-container {
+    max-width: var(--content-width);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.statement-text {
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.2vw, 3.4rem);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+    margin-bottom: 0;
+}
+
+/* Emphasis inside the statement carries the brand blue... */
+.statement-text strong {
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* ...except the failure case, which is the one warning on the page and is
+   the only place --danger appears. Higher specificity than the rule above,
+   so it wins without !important. */
+.statement-text .alert {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.statement-screenshot {
+    display: flex;
+    justify-content: center;
+}
+.statement-screenshot img {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    filter: drop-shadow(0 30px 70px rgba(15, 4, 53, 0.18));
+    transition: transform 0.4s var(--ease);
+}
+.statement-screenshot img:hover {
+    transform: translateY(-8px);
+}
+
+@media (max-width: 900px) {
+    .statement-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 3rem;
+    }
+    /* Screenshot leads on mobile — the claim reads better beneath it. */
+    .statement-screenshot { order: -1; }
+}
