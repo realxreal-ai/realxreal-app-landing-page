@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Reset
+   Deliberately minimal — just enough to flatten browser defaults so the
+   token layer is what actually decides spacing and color.
+   ========================================================================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* No global line-height here on purpose. The phone mockups size their text
+   in absolute px against a fixed frame, and a loosened default leading
+   pushes the codeword row out of the screen. Prose leading is set on the
+   block elements that need it, in typography.css. */
+body {
+    font-family: var(--font-body);
+    background: var(--surface);
+    color: var(--body);
+    overflow-x: hidden;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+ul,
+ol { list-style: none; }
+
+a { color: inherit; }
+
+button {
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: none;
+    cursor: pointer;
+}

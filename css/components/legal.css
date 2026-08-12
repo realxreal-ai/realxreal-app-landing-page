@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Legal Pages — Privacy Policy & Terms of Service
+   Two-column read: a sticky table of contents rail beside a fixed-width
+   prose column, collapsing to a <details> dropdown on mobile.
+
+   The scrollspy that toggles .active on the sidebar links lives in
+   js/modules/toc.js.
+   ========================================================================== */
+.legal-section {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+}
+
+.legal-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+.legal-header h1 { margin-bottom: 1rem; }
+
+.last-updated {
+    font-size: 0.95rem;
+    color: var(--ink-muted);
+    font-style: italic;
+}
+
+.legal-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 4rem;
+    align-items: start;
+    position: relative;
+    padding-bottom: 4rem;
+}
+
+/* --- Sticky sidebar ------------------------------------------------------ */
+.toc-sticky-container {
+    position: sticky;
+    top: var(--nav-offset);
+    padding-right: 1rem;
+    border-right: 1px solid var(--rule);
+}
+
+.toc-title {
+    display: block;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--ink-faint);
+}
+
+.toc-sidebar li { margin-bottom: 0.5rem; }
+
+.toc-sidebar a {
+    display: block;
+    font-size: 0.9rem;
+    text-decoration: none;
+    color: var(--ink-muted);
+    transition: all 0.2s var(--ease);
+    padding: 4px 0 4px 10px;
+    border-left: 2px solid transparent;
+    margin-left: -11px; /* pulls the border flush with the rail */
+}
+.toc-sidebar a:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
+.toc-sidebar a.active {
+    color: var(--primary);
+    border-left-color: var(--primary);
+    font-weight: 600;
+}
+
+.toc-divider {
+    height: 1px;
+    background: var(--rule);
+    margin: 1rem 0;
+}
+
+/* --- Mobile dropdown ----------------------------------------------------- */
+.mobile-toc {
+    display: none;
+    background: rgba(67, 112, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(67, 112, 255, 0.2);
+}
+.mobile-toc summary {
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--primary);
+}
+.mobile-toc ul { margin-top: 1rem; }
+.mobile-toc li {
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--rule-soft);
+}
+.mobile-toc li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+.mobile-toc a { text-decoration: none; }
+
+/* --- Prose column -------------------------------------------------------- */
+.legal-content-wrapper {
+    max-width: var(--reading-width);
+}
+
+.legal-block {
+    /* Anchor jumps land below the fixed nav rather than underneath it. */
+    scroll-margin-top: var(--nav-offset);
+    margin-bottom: 3rem;
+}
+
+.legal-block h2 { margin-bottom: 1rem; }
+.legal-block h3 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.legal-block ul,
+.legal-block ol {
+    margin: 0 0 1rem 1.5rem;
+}
+.legal-block ul { list-style: disc; }
+.legal-block ol { list-style: decimal; }
+.legal-block li {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+}
+
+.section-divider {
+    border: 0;
+    height: 1px;
+    background: var(--rule);
+    margin: 4rem 0;
+}
+
+/* --- Callout ------------------------------------------------------------
+   Beta/roadmap notice. Previously a block of inline styles on the div. */
+.legal-callout {
+    background: rgba(67, 112, 255, 0.08);
+    border-left: 4px solid var(--primary);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+}
+.legal-callout h3 {
+    margin-top: 0;
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+.legal-callout p {
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+/* Attribution / fine print. */
+.legal-footnote {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 900px) {
+    .legal-layout { display: block; }
+    .toc-sidebar { display: none; }
+    .mobile-toc { display: block; }
+}

@@ -1,0 +1,369 @@
+/* ==========================================================================
+   Phone Mockups
+   Two CSS-drawn iPhones showing Alice's and Bob's mirrored views of the same
+   codeword pair. Everything inside .phone-screen stays on the original dark
+   brand palette — that contrast against the white hero is the whole point of
+   the light-mode surface.
+
+   Driven by js/modules/codeword-rotation.js (words + ring) and
+   js/modules/device-clock.js (status bar).
+
+   --------------------------------------------------------------------------
+   SIZING MODEL — read this before changing any number below.
+
+   The device was drawn at a fixed 420 x 870, and every interior measurement
+   was authored against that frame. Rather than re-tune each one per
+   breakpoint, the whole mockup scales from a single input:
+
+       --phone-h   the frame's rendered height, viewport-relative
+       --u         one "design pixel" — the frame's own unit at that height
+
+   So a value that was 26px in the original is `calc(26 * var(--u))`, and it
+   holds its proportion at every size. Interior numbers are therefore raw
+   design pixels, not rem: 1rem in the original == 16 design px.
+
+   The countdown ring is exempt — it is an SVG with a viewBox, so it scales
+   from its own box for free.
+
+   The height is what is clamped, not the width, because the hero's problem
+   is vertical: the frame has to fit inside a laptop viewport alongside the
+   nav. Width follows from the aspect ratio.
+   ========================================================================== */
+.phone-pair {
+    /* Space between the two devices. Declared first because the height
+       budget below has to subtract it. */
+    --pair-gap: clamp(1rem, 3.5vw, 3.5rem);
+
+    /* Three limits, smallest wins:
+
+         78vh            share of viewport height. The pair sits in its own
+                         grid column, competing only with the hero's
+                         padding rather than with the copy beside it, which
+                         is what lets it run taller than the copy column
+                         could. Capped at 900px for 4K.
+         100vh - 200px   the height actually left after the hero's padding
+                         (~160-200px depending on viewport). On a short
+                         laptop this remainder, not the percentage, is the
+                         real limit — a flat 78vh leaves too little slack
+                         at 768-800px tall.
+         width budget    two frames plus the gap between them have to fit
+                         the row. This is the guard for the 681-999px band,
+                         where the hero has stacked but the devices are
+                         still side by side; the 8px is slack against
+                         scrollbar rounding. Above 1000px the media query
+                         below replaces it with the real column width. */
+    --phone-h: min(
+        clamp(400px, 78vh, 900px),
+        100vh - 200px,
+        (100vw - 2 * var(--gutter) - var(--pair-gap) - 8px) / 2 * 870 / 420
+    );
+    --u: calc(var(--phone-h) / 870);
+
+    /* Design width of one frame, derived from the height. */
+    --phone-w: calc(420 * var(--u));
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--pair-gap);
+    position: relative;
+}
+
+/* Ambient glow sitting between and behind the two devices. */
+.phone-pair::before {
+    content: '';
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    width: calc(360 * var(--u));
+    height: calc(360 * var(--u));
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(67, 112, 255, 0.22) 0%, rgba(67, 112, 255, 0) 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: pulseGlow 4s ease-in-out infinite;
+}
+
+/* --- Device frame -------------------------------------------------------- */
+.phone {
+    position: relative;
+    height: var(--phone-h);
+    width: var(--phone-w);
+    background: #050113;
+    border-radius: calc(68 * var(--u));
+    padding: calc(14 * var(--u));
+    box-shadow:
+        0 0 0 calc(2 * var(--u)) rgba(15, 4, 53, 0.06),
+        0 calc(45 * var(--u)) calc(110 * var(--u)) rgba(15, 4, 53, 0.24),
+        0 calc(12 * var(--u)) calc(36 * var(--u)) rgba(67, 112, 255, 0.22);
+    z-index: 1;
+    flex-shrink: 0;
+    animation: floatPhone 6s ease-in-out infinite;
+}
+
+/* Negative delay puts the right phone half a cycle ahead, so the pair never
+   bobs in unison. */
+.phone-right { animation-delay: -3s; }
+
+.phone-screen {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    border-radius: calc(56 * var(--u));
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.dynamic-island {
+    position: absolute;
+    top: calc(16 * var(--u));
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(108 * var(--u));
+    height: calc(30 * var(--u));
+    background: #000;
+    border-radius: calc(16 * var(--u));
+    z-index: 5;
+}
+
+.status-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: calc(20 * var(--u)) calc(26 * var(--u)) 0;
+    font-size: calc(13.1 * var(--u));
+    font-weight: 600;
+    color: var(--text-dark);
+    opacity: 0.9;
+}
+
+/* --- Screen content ------------------------------------------------------ */
+.app-content {
+    width: 100%;
+    padding: calc(56 * var(--u)) calc(26 * var(--u)) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-row {
+    display: flex;
+    align-items: center;
+    gap: calc(13.6 * var(--u));
+    width: 100%;
+    margin-bottom: calc(32 * var(--u));
+}
+
+.avatar {
+    width: calc(46 * var(--u));
+    height: calc(46 * var(--u));
+    border-radius: 50%;
+    background: rgba(67, 112, 255, 0.18);
+    border: 1px solid rgba(67, 112, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: calc(17.6 * var(--u));
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.contact-meta { text-align: left; }
+.contact-name {
+    font-family: var(--font-heading);
+    font-size: calc(20 * var(--u));
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+}
+.contact-status {
+    display: flex;
+    align-items: center;
+    gap: calc(5 * var(--u));
+    font-size: calc(12.5 * var(--u));
+    font-weight: 500;
+    color: var(--success);
+    margin-top: calc(3 * var(--u));
+    line-height: 1.3;
+}
+.contact-status .status-dot {
+    width: calc(6 * var(--u));
+    height: calc(6 * var(--u));
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--success);
+}
+
+/* --- Codeword pair ------------------------------------------------------- */
+.word-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: calc(32 * var(--u));
+    margin-bottom: calc(32 * var(--u));
+    border-bottom: 1px solid var(--border);
+}
+.word-col {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+.word-divider {
+    width: 1px;
+    height: calc(58 * var(--u));
+    flex-shrink: 0;
+    background: var(--border);
+}
+
+/* "YOUR WORD" / "BOB'S WORD". Sized up from 10.6 design px and taken to
+   solid white — at the old size and 55% opacity these were rendering around
+   8px on a 900px-tall laptop and were effectively unreadable. Weight still
+   separates them from the codeword itself, which is 27.2 and bold. */
+.word-label {
+    font-size: calc(15 * var(--u));
+    font-weight: 600;
+    letter-spacing: calc(1 * var(--u));
+    color: #fff;
+    margin-bottom: calc(8 * var(--u));
+    text-transform: uppercase;
+    line-height: 1.3;
+
+    /* The longest label, "ALICE'S WORD", is close to its column width at
+       this size; keeping it on one line preserves the row's alignment. */
+    white-space: nowrap;
+}
+
+/* Both codewords in a row share the same blue. They are the two halves of
+   one rotating pair, so colouring them differently implied a distinction
+   that isn't there — the point is that the two devices agree. */
+.word-value {
+    font-family: var(--font-mono);
+    font-size: calc(27.2 * var(--u));
+    font-weight: 700;
+    color: var(--secondary);
+    display: inline-block;
+    line-height: 1.2;
+
+    /* Reserved height keeps the row from collapsing during the swap, when
+       the value is momentarily transparent. */
+    min-height: calc(32 * var(--u));
+    transition: opacity 0.28s var(--ease), transform 0.28s var(--ease);
+}
+
+/* Applied by the rotation engine for the duration of the crossfade. The JS
+   timeout that swaps the text must stay in step with this transition. */
+.word-value.swapping {
+    opacity: 0;
+    transform: translateY(calc(6 * var(--u))) scale(0.94);
+}
+
+/* --- Circular countdown -------------------------------------------------- */
+.timer-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: calc(10.4 * var(--u));
+}
+
+.timer-ring {
+    position: relative;
+    width: calc(124 * var(--u));
+    height: calc(124 * var(--u));
+}
+
+/* Rotated so the stroke starts at 12 o'clock rather than 3. The SVG has a
+   viewBox, so its interior — including stroke-width — scales with this box
+   and needs no --u treatment. */
+.timer-ring svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+}
+
+.timer-ring circle {
+    fill: none;
+    stroke-width: 5;
+}
+.timer-ring .track { stroke: rgba(176, 195, 255, 0.12); }
+.timer-ring .progress {
+    stroke: var(--primary);
+    stroke-linecap: round;
+    transition: stroke 0.3s var(--ease);
+}
+
+/* Last few seconds before a rotation. */
+.timer-ring .progress.urgent { stroke: var(--secondary); }
+
+.timer-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: calc(23.2 * var(--u));
+    color: #fff;
+}
+
+.timer-caption {
+    font-size: calc(12 * var(--u));
+    font-weight: 500;
+    color: rgba(176, 195, 255, 0.55);
+    text-align: center;
+    line-height: 1.5;
+}
+
+/* ==========================================================================
+   Responsive
+   Only --phone-h changes; every interior measurement follows from it.
+   ========================================================================== */
+
+/* Two-column hero. Height alone is not a sufficient constraint here — the
+   pair also has to fit the grid column beside the copy.
+
+   An earlier version approximated that column with a flat vw value, which
+   was wrong above ~1264px: past that width the hero shell stops growing
+   (it hits its max-width) while vw keeps climbing, so the devices grew
+   past their column and leaned into the copy — 119px of overlap at 1920,
+   leaving only 12px of visible separation.
+
+   So the budget is now derived from the column itself rather than guessed:
+   take the hero's inner width, remove the column gap, take this column's
+   1.15fr share, remove the gap between the two devices, halve it. The 12px
+   is slack, since --hero-inner-w is computed from 100vw and a visible
+   scrollbar makes that a slight overestimate.
+
+   Keep the 1.15 below in step with grid-template-columns in
+   layout/container.css — the two describe the same track. */
+@media (min-width: 1000px) {
+    .phone-pair {
+        --visual-track: calc((var(--hero-inner-w) - var(--hero-gap)) * 1.15 / 2);
+        --phone-max-w: calc((var(--visual-track) - var(--pair-gap) - 12px) / 2);
+        --phone-h: min(
+            clamp(400px, 78vh, 900px),
+            100vh - 200px,
+            var(--phone-max-w) * 870 / 420
+        );
+    }
+}
+
+/* Stacked hero. The pair is no longer competing with the copy for
+   horizontal room, so the devices are sized from width instead of height —
+   they stay a genuine focal point rather than shrinking to fit a column. */
+@media (max-width: 680px) {
+    .phone-pair {
+        --phone-h: calc(min(76vw, 330px) * 870 / 420);
+        --pair-gap: 2.5rem;
+        flex-direction: column;
+    }
+    .phone-pair::before { top: 30%; }
+
+    /* Stacked vertically the offset float reads as a glitch, so both
+       devices bob together. */
+    .phone-right { animation-delay: 0s; }
+}
