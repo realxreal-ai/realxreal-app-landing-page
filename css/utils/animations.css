@@ -37,6 +37,29 @@
 }
 
 /* ==========================================================================
+   Scroll reveal
+   The CSS half of the site's existing reveal utility. initFadeInObserver()
+   in js/animations.js already watches every .fade-in element and toggles
+   .visible as it crosses into view — this supplies the states that observer
+   drives. Sections opt in by adding .fade-in; nothing else is required.
+
+   The curve is an ease-out rather than the shared --ease (an ease-in-out):
+   a reveal should decelerate into place, not start slowly.
+   ========================================================================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ==========================================================================
    Reduced motion
    The looping animations here are decorative — none of them communicate
    state, so they can all be stopped outright. The codeword countdown ring
@@ -52,5 +75,16 @@
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
+    }
+
+    /* Scroll-revealed content needs its resting state restored outright, not
+       just a faster transition. Zeroing the duration above would still leave
+       these elements invisible until the observer happened to reach them —
+       and anything below the fold that never got observed would stay hidden
+       for good. */
+    .fade-in,
+    .fade-in.visible {
+        opacity: 1;
+        transform: none;
     }
 }

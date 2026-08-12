@@ -8,29 +8,6 @@
 // .rotating-screenshot class automatically.
 // ==========================================================================
 
-const SCREENSHOT_SETS = {
-    'memory': [
-        'images/memory-challenges/memory-1.png',
-        'images/memory-challenges/memory-2.png',
-        'images/memory-challenges/memory-3.png',
-        'images/memory-challenges/memory-4.png',
-        'images/memory-challenges/memory-5.png'
-    ],
-    'verify': [
-        'images/verification-scenarios/verify-zoom.png',
-        'images/verification-scenarios/verify-zelle.png',
-        'images/verification-scenarios/verify-emergency.png',
-        'images/verification-scenarios/verify-wire.png',
-        'images/verification-scenarios/verify-executive.png'
-    ],
-    'verify-receive': [
-        'images/verification-receiving/receive-zoom.png',
-        'images/verification-receiving/receive-zelle.png',
-        'images/verification-receiving/receive-emergency.png',
-        'images/verification-receiving/receive-wire.png',
-        'images/verification-receiving/receive-ceo.png'
-    ]
-};
 
 const ROTATION_INTERVAL_MS = 5000;
 const FADE_DURATION_MS = 300;

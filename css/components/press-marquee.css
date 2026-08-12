@@ -12,14 +12,20 @@
     overflow: hidden;
 }
 
+/* Reads as a section label, not a caption. --ink-muted is a 55%-opacity
+   token built for incidental meta text; at this size on this ground it sat
+   near 3:1 and disappeared. --heading is the site's standard dark ink and
+   clears 16:1 here. Tracking is eased off as the size goes up — 1.5px is a
+   lot of air under a 20px word. */
 .press-eyebrow {
     text-align: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 1.5px;
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 1.35vw, 1.3rem);
+    font-weight: 700;
+    letter-spacing: 0.09em;
     text-transform: uppercase;
-    color: var(--ink-muted);
-    margin-bottom: 2.25rem;
+    color: var(--heading);
+    margin-bottom: 2.75rem;
 }
 
 /* Mask fades cards in and out at the edges instead of clipping them hard. */
@@ -30,56 +36,198 @@
     mask-image: linear-gradient(90deg, transparent 0%, #000 6%, #000 94%, transparent 100%);
 }
 
-/* The track holds the card set twice — see the note in index.html. */
+/* The track holds the card set twice — see the note in index.html.
+   The duration is tied to the number of cards, not to a feel: the track
+   translates a fixed -50%, so doubling the card count doubles the distance
+   and would double the speed if the duration stayed put. 110s for 14 cards
+   is the same pixels-per-second the 7-card set ran at 55s. */
 .press-track {
     display: flex;
     gap: 1.5rem;
     width: max-content;
-    animation: pressScroll 55s linear infinite;
+    animation: pressScroll 110s linear infinite;
 }
 .press-track:hover { animation-play-state: paused; }
 
+/* ==========================================================================
+   Cards
+   Each card is a filed press clipping. The outlet rides a tab that breaks out
+   above the card edge; the card body carries the date, the headline, and a
+   ruled byline. The accent is set once per card as --press-rgb (space-
+   separated channels, so one property drives both the solid colour and the
+   alpha tints below) and everything here reads from it.
+
+   The card's layout box is unchanged from the plain version — same width,
+   same min-height, same padding, and box-sizing:border-box means the heavier
+   border costs nothing. The tab is absolutely positioned outside the box, so
+   it overhangs into the margin below the eyebrow rather than growing the card.
+   ========================================================================== */
 .press-card {
+    /* Fallback for a card with no data-outlet — brand blue. */
+    --press-rgb: 67 112 255;
+
     flex-shrink: 0;
     width: 340px;
-    background: var(--surface-raised);
-    border: 1px solid var(--rule);
-    border-radius: 16px;
-    padding: 1.5rem 1.6rem;
-    box-shadow: var(--shadow-card);
-}
-
-.press-source-row {
+    /* Locks the marquee's footprint. Card height used to be emergent — every
+       card stretched to whichever headline happened to wrap longest, so the
+       section's height moved whenever the copy did. 12.55rem is the height
+       the original seven-card set settled at; holding it as a floor keeps the
+       band exactly the size it was while the card list grows. */
+    min-height: 12.55rem;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.85rem;
+    flex-direction: column;
+    position: relative;
+    text-decoration: none;
+    background-color: var(--surface-raised);
+    background-image: linear-gradient(
+        180deg,
+        rgb(var(--press-rgb) / 0.09),
+        rgb(var(--press-rgb) / 0.02) 60%,
+        rgb(var(--press-rgb) / 0.02)
+    );
+    border: 2px solid rgb(var(--press-rgb) / 0.40);
+    /* Asymmetric: tight where the tab lands and where the offset shadow
+       leaves, generous on the opposite diagonal. The card reads as cut and
+       filed rather than as a rounded rectangle from a component library. */
+    border-radius: 4px 20px 4px 20px;
+    padding: 1.5rem 1.6rem;
+    /* A hard offset block in the outlet's own colour, under a soft ambient
+       one. The hard edge is what gives it the printed, physical quality; the
+       ambient shadow keeps it seated on the page instead of floating. */
+    box-shadow:
+        5px 5px 0 rgb(var(--press-rgb) / 0.16),
+        0 8px 22px rgba(15, 4, 53, 0.05);
+    transition:
+        transform 0.25s var(--ease),
+        box-shadow 0.25s var(--ease),
+        border-color 0.25s var(--ease);
 }
 
-.press-outlet {
+/* The filing tab. bottom:100% seats it directly on the card's top edge, and
+   it is inset from the left so it aligns with the card's text column. */
+.press-tab {
+    position: absolute;
+    bottom: 100%;
+    left: 1.5rem;
+    padding: 0.3rem 0.7rem 0.25rem;
+    background: rgb(var(--press-rgb));
+    color: #fff;
     font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Leaves-the-site marker, parked in the corner the tab does not occupy. */
+.press-card::after {
+    content: "↗";
+    position: absolute;
+    top: 1.15rem;
+    right: 1.3rem;
     font-size: 0.85rem;
     font-weight: 700;
-    color: var(--heading);
+    line-height: 1;
+    color: rgb(var(--press-rgb) / 0.75);
+    transition: transform 0.25s var(--ease);
 }
 
+/* Hovering a card already pauses the track, so the motion has time to read.
+   The card steps up-left into its own shadow, which grows to meet it — the
+   press-and-lift of a physical card. Transforms only: nothing here may
+   change the layout box. */
+.press-card:hover,
+.press-card:focus-visible {
+    transform: translate(-3px, -3px);
+    border-color: rgb(var(--press-rgb) / 0.75);
+    box-shadow:
+        10px 10px 0 rgb(var(--press-rgb) / 0.22),
+        0 16px 34px rgba(15, 4, 53, 0.09);
+}
+
+.press-card:hover::after,
+.press-card:focus-visible::after {
+    transform: translate(2px, -2px);
+}
+
+.press-card:focus-visible {
+    outline: 2px solid rgb(var(--press-rgb));
+    outline-offset: 3px;
+}
+
+/* --- Outlet palette ------------------------------------------------------
+   One accent per outlet, each darkened until it clears 4.5:1 against its own
+   tinted card. The tab reverses this: white on the solid accent, which is the
+   harder direction, so the same values are re-checked against #fff in the
+   note beside the tab contrast figures below.
+
+     on tint  Ars 6.3  CNN 5.6  404 5.5  WIRED 4.8
+              SciAm 5.8  Forbes 6.2  BBC 6.0  CR 6.0
+
+   Card order in the markup keeps any two neighbours on different accents,
+   including across the loop seam. */
+.press-card[data-outlet="ars"]    { --press-rgb: 154  52  18; }  /* #9A3412 */
+.press-card[data-outlet="cnn"]    { --press-rgb: 185  28  28; }  /* #B91C1C */
+.press-card[data-outlet="m404"]   { --press-rgb: 162  28 175; }  /* #A21CAF */
+.press-card[data-outlet="wired"]  { --press-rgb:  15 118 110; }  /* #0F766E */
+.press-card[data-outlet="sciam"]  { --press-rgb:  29  78 216; }  /* #1D4ED8 */
+.press-card[data-outlet="forbes"] { --press-rgb:  22 101  52; }  /* #166534 */
+.press-card[data-outlet="bbc"]    { --press-rgb: 126  34 206; }  /* #7E22CE */
+.press-card[data-outlet="cr"]     { --press-rgb: 133  77  14; }  /* #854D0E */
+
+/* --- Card interior -------------------------------------------------------
+   Spans rather than <p>/<div>: the card is an <a>, so the interior is kept
+   inline-level in the source and made block here. */
 .press-date {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: var(--ink-faint);
+    display: block;
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 0.7rem;
 }
 
 .press-headline {
-    font-size: 0.98rem;
+    display: block;
+    font-size: 1.02rem;
     font-weight: 600;
-    line-height: 1.45;
+    line-height: 1.4;
     color: var(--heading);
-    margin-bottom: 0.6rem;
+    /* Pushes the byline to the card's floor, so the ruled line sits at a
+       consistent height across cards whose headlines wrap differently. */
+    margin-bottom: auto;
 }
 
+/* Ruled off like a source credit under a printed clipping, with a short
+   accent dash leading it. */
 .press-byline {
-    font-size: 0.78rem;
+    display: block;
+    position: relative;
+    margin-top: 0.5rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid rgb(var(--press-rgb) / 0.22);
+    font-size: 0.76rem;
     font-weight: 500;
+    line-height: 1.45;
     color: var(--ink-muted);
-    margin-bottom: 0;
+}
+
+.press-byline::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 1.75rem;
+    height: 2px;
+    background: rgb(var(--press-rgb));
+}
+
+/* The lift is decoration; the colour and the underline-free link are not. */
+@media (prefers-reduced-motion: reduce) {
+    .press-card:hover,
+    .press-card:focus-visible { transform: none; }
 }
