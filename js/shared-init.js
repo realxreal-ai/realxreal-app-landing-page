@@ -11,6 +11,7 @@ import { initCardHoverEffects, initHeroParallax, initDownloadBadgePulse } from '
 import { initExternalLinks, initCopyrightYear } from './utils.js';
 import { initLazyScreenshots } from './lazy-load.js';
 import { initScreenshotRotators } from './screenshot-rotator.js';
+import { initTelemetry } from './telemetry.js';
 
 export function initShared() {
     // Navigation
@@ -38,4 +39,7 @@ export function initShared() {
     // Screenshots
     initLazyScreenshots();
     initScreenshotRotators();
+
+    // Analytics
+    initTelemetry();
 }
