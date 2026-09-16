@@ -77,46 +77,11 @@
     letter-spacing: -0.3px;
 }
 
-/* --- Play Store: same shape, locked "coming soon" state ------------------- */
+/* --- Play Store: same shape, Google Play green ---------------------------- */
 .custom-download-button.play-store {
-    position: relative;
-    background: linear-gradient(135deg, #f1f2f6 0%, #e4e6ee 100%);
-    color: #6b7080;
-    box-shadow: 0 4px 14px rgba(15, 4, 53, 0.08);
-    cursor: not-allowed;
+    background: linear-gradient(135deg, #34C759 0%, #1FA24A 100%);
+    box-shadow: 0 8px 24px rgba(31, 162, 74, 0.35);
 }
 .custom-download-button.play-store:hover {
-    color: #6b7080;
-    transform: none;
-    box-shadow: 0 4px 14px rgba(15, 4, 53, 0.08);
-    border-color: transparent;
-}
-.custom-download-button.play-store svg { opacity: 0.55; }
-.custom-download-button.play-store .button-label,
-.custom-download-button.play-store .button-store { opacity: 0.6; }
-
-.coming-soon-ribbon {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: var(--heading);
-    color: #fff;
-    font-family: var(--font-body);
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.4px;
-    text-transform: uppercase;
-    padding: 0.3rem 0.6rem;
-    border-radius: 999px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    white-space: nowrap;
-}
-
-@media (max-width: 400px) {
-    .coming-soon-ribbon {
-        font-size: 0.55rem;
-        padding: 0.25rem 0.5rem;
-        top: -8px;
-        right: -8px;
-    }
+    box-shadow: 0 12px 32px rgba(31, 162, 74, 0.45);
 }
